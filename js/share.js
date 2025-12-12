@@ -3,13 +3,9 @@
 // Initialize Kakao SDK
 function initKakao() {
     if (window.Kakao && !window.Kakao.isInitialized()) {
-        // TODO: Replace with your actual Kakao JavaScript Key
-        // Get your key from https://developers.kakao.com/
-        const kakaoKey = 'YOUR_KAKAO_JAVASCRIPT_KEY';
-
-        if (kakaoKey !== 'YOUR_KAKAO_JAVASCRIPT_KEY') {
-            window.Kakao.init(kakaoKey);
-        }
+        const kakaoKey = '2b78d22d6aa77c493c1ce9ada6aee71b';
+        window.Kakao.init(kakaoKey);
+        console.log('Kakao SDK initialized');
     }
 }
 
