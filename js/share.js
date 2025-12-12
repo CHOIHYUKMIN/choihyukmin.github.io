@@ -1,5 +1,79 @@
 // Share functionality using html2canvas
 
+// Initialize Kakao SDK
+function initKakao() {
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+        // TODO: Replace with your actual Kakao JavaScript Key
+        // Get your key from https://developers.kakao.com/
+        const kakaoKey = 'YOUR_KAKAO_JAVASCRIPT_KEY';
+        
+        if (kakaoKey !== 'YOUR_KAKAO_JAVASCRIPT_KEY') {
+            window.Kakao.init(kakaoKey);
+        }
+    }
+}
+
+// Call init when DOM is loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initKakao);
+} else {
+    initKakao();
+}
+
+// Share to KakaoTalk
+function shareToKakao(physicalAge, mentalAge, diffText) {
+    if (!window.Kakao || !window.Kakao.isInitialized()) {
+        alert('카카오톡 공유를 사용하려면 Kakao JavaScript Key를 설정해주세요.\n\njs/share.js 파일에서 YOUR_KAKAO_JAVASCRIPT_KEY를 실제 키로 변경하세요.');
+        return;
+    }
+
+    try {
+        window.Kakao.Share.sendDefault({
+            objectType: 'feed',
+            content: {
+                title: '🎯 마음의 나이 계산기',
+                description: `내 실물 나이는 ${physicalAge}세, 마음의 나이는 ${mentalAge}세!\n${diffText}`,
+                imageUrl: 'https://via.placeholder.com/800x400.png?text=Mental+Age+Calculator',
+                link: {
+                    mobileWebUrl: window.location.href,
+                    webUrl: window.location.href,
+                },
+            },
+            buttons: [
+                {
+                    title: '나도 테스트하기',
+                    link: {
+                        mobileWebUrl: window.location.origin + window.location.pathname,
+                        webUrl: window.location.origin + window.location.pathname,
+                    },
+                },
+            ],
+        });
+    } catch (error) {
+        console.error('Kakao share error:', error);
+        alert('카카오톡 공유에 실패했습니다.');
+    }
+}
+
+// Share to X (Twitter)
+function shareToTwitter(physicalAge, mentalAge, diffText) {
+    const text = `내 실물 나이는 ${physicalAge}세, 마음의 나이는 ${mentalAge}세! ${diffText}\n\n나도 테스트하기 👉`;
+    const url = window.location.href;
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    
+    window.open(twitterUrl, '_blank', 'width=550,height=420');
+}
+
+// Share to Instagram (Download guide)
+function shareToInstagram() {
+    const message = `인스타그램에 공유하려면:\n\n1. 아래 '이미지 저장' 버튼을 눌러주세요\n2. 인스타그램 앱을 열어주세요\n3. 스토리나 게시물에 저장된 이미지를 업로드하세요\n\n💡 팁: 스토리에는 해시태그 #마음의나이 #심리테스트 를 추가해보세요!`;
+    
+    if (confirm(message)) {
+        // Trigger image download
+        downloadResultImage();
+    }
+}
+
 // Download result as image
 async function downloadResultImage() {
     try {
@@ -124,6 +198,9 @@ async function shareResult(physicalAge, mentalAge, message) {
 // Export functions
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
+        shareToKakao,
+        shareToTwitter,
+        shareToInstagram,
         downloadResultImage,
         copyLinkToClipboard,
         shareResult

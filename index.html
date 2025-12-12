@@ -28,6 +28,13 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
+
+    <!-- Kakao SDK -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7456046576951897"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -61,6 +68,15 @@
                     <span data-i18n="btnStart">테스트 시작하기</span>
                     <span class="btn-glow"></span>
                 </button>
+
+                <!-- AdSense Ad -->
+                <div class="ad-container" style="margin-top: 3rem;">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7456046576951897"
+                        data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
             </div>
         </div>
     </section>
@@ -170,22 +186,55 @@
                     <p class="message-text" id="message-text">완벽한 밸런스!</p>
                 </div>
 
+                <!-- AdSense Ad -->
+                <div class="ad-container" style="margin: 2rem 0;">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7456046576951897"
+                        data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+
                 <div class="share-buttons">
-                    <button class="btn-share" onclick="app.downloadImage()">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                    <button class="btn-share btn-kakao" onclick="app.shareKakao()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 3C6.486 3 2 6.262 2 10.5c0 2.545 1.634 4.792 4.114 6.217l-1.037 3.793c-.065.238.108.474.35.474.092 0 .186-.034.258-.101l4.375-3.245C10.695 17.82 11.34 17.9 12 17.9c5.514 0 10-3.262 10-7.4S17.514 3 12 3z" />
                         </svg>
-                        이미지 저장
+                        카카오톡
                     </button>
 
-                    <button class="btn-share" onclick="app.copyLink()">
+                    <button class="btn-share btn-twitter" onclick="app.shareTwitter()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                        X
+                    </button>
+
+                    <button class="btn-share btn-instagram" onclick="app.shareInstagram()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
+                        </svg>
+                        Instagram
+                    </button>
+
+                    <button class="btn-share btn-link" onclick="app.copyLink()">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
                             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
                         </svg>
                         링크 복사
+                    </button>
+
+                    <button class="btn-share btn-download" onclick="app.downloadImage()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                        </svg>
+                        이미지 저장
                     </button>
                 </div>
 

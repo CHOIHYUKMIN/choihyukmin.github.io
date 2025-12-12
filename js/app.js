@@ -295,6 +295,25 @@ const app = {
         await copyLinkToClipboard();
     },
 
+    // Share to KakaoTalk
+    shareKakao() {
+        const diff = this.mentalAge - this.physicalAge;
+        const diffText = diff > 0 ? `${diff}살 더 성숙해요!` : diff < 0 ? `${Math.abs(diff)}살 더 젊어요!` : '딱 맞아요!';
+        shareToKakao(this.physicalAge, this.mentalAge, diffText);
+    },
+
+    // Share to X (Twitter)
+    shareTwitter() {
+        const diff = this.mentalAge - this.physicalAge;
+        const diffText = diff > 0 ? `${diff}살 더 성숙해요!` : diff < 0 ? `${Math.abs(diff)}살 더 젊어요!` : '딱 맞아요!';
+        shareToTwitter(this.physicalAge, this.mentalAge, diffText);
+    },
+
+    // Share to Instagram
+    shareInstagram() {
+        shareToInstagram();
+    },
+
     // Restart
     restart() {
         this.uploadedImage = null;
