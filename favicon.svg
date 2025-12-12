@@ -1,0 +1,15 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f5576c;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Heart shape representing mental/emotional aspect -->
+  <path d="M32 54 C20 44, 8 36, 8 24 C8 16, 14 10, 20 10 C26 10, 30 14, 32 18 C34 14, 38 10, 44 10 C50 10, 56 16, 56 24 C56 36, 44 44, 32 54 Z" 
+        fill="url(#gradient)" />
+  
+  <!-- Question mark for age mystery -->
+  <text x="32" y="34" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">?</text>
+</svg>
