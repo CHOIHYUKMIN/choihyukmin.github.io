@@ -122,7 +122,7 @@ const i18n = {
 
         // Update meta tags for SEO
         document.querySelector('meta[name="description"]').setAttribute('content', this.t('subtitle').replace(/<br>/g, ' '));
-        document.title = this.t('title').replace(/<br>/g, ' ') + ' | Mental Age Calculator';
+        document.title = this.t('title').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim() + ' | Mental Age Calculator';
     },
 
     // Update language selector (dropdown)
