@@ -255,14 +255,15 @@ body {
 
 .section-title {
     font-family: 'Outfit', sans-serif;
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 0.5rem;
 }
 
 .section-description {
     color: var(--text-secondary);
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 0.95rem;
 }
 
 .upload-card {
@@ -271,8 +272,8 @@ body {
     backdrop-filter: blur(10px);
     border: 2px dashed rgba(255, 255, 255, 0.2);
     border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
     transition: all var(--transition-medium);
 }
 
@@ -284,16 +285,17 @@ body {
 .upload-area {
     cursor: pointer;
     text-align: center;
+    padding: var(--spacing-md) 0;
 }
 
 .upload-icon {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
     color: var(--text-tertiary);
 }
 
 .upload-text {
     color: var(--text-secondary);
-    font-size: 1rem;
+    font-size: 0.95rem;
 }
 
 .preview-area {
@@ -302,19 +304,20 @@ body {
 
 .preview-area img {
     max-width: 100%;
-    max-height: 350px;
+    max-height: 280px;
     border-radius: var(--radius-md);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
 }
 
 .btn-change {
     background: var(--bg-card);
     color: var(--text-primary);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 0.75rem 1.5rem;
+    padding: 0.6rem 1.2rem;
     border-radius: var(--radius-full);
     cursor: pointer;
     transition: all var(--transition-fast);
+    font-size: 0.9rem;
 }
 
 .btn-change:hover {
@@ -323,17 +326,18 @@ body {
 }
 
 .analyzing-area {
-    padding: var(--spacing-xl);
+    padding: var(--spacing-md);
     text-align: center;
 }
 
 .analyzing-text {
     color: var(--text-secondary);
-    margin-top: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+    font-size: 0.95rem;
 }
 
 .age-result {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
 }
 
 .result-badge {
@@ -341,25 +345,25 @@ body {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(102, 126, 234, 0.3);
     border-radius: var(--radius-lg);
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
     display: inline-block;
 }
 
 .result-label {
     display: block;
     color: var(--accent-purple);
-    font-size: 0.9rem;
-    margin-bottom: var(--spacing-xs);
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
 }
 
 .result-value {
     display: block;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 
 .result-value strong {
     font-family: 'Poppins', sans-serif;
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: var(--accent-purple);
 }
 
@@ -754,38 +758,51 @@ body {
     }
 
     .section-title {
-        font-size: 1.4rem;
-        margin-bottom: var(--spacing-xs);
+        font-size: 1.3rem;
+        margin-bottom: 0.3rem;
     }
 
     .section-description {
-        font-size: 0.85rem;
-        margin-bottom: var(--spacing-md);
+        font-size: 0.8rem;
+        margin-bottom: var(--spacing-sm);
     }
 
     .upload-card {
-        padding: var(--spacing-md);
-        margin-bottom: var(--spacing-sm);
+        padding: var(--spacing-sm);
+        margin-bottom: 0.5rem;
+    }
+
+    .upload-area {
+        padding: var(--spacing-sm) 0;
+    }
+
+    .upload-icon svg {
+        width: 48px;
+        height: 48px;
     }
 
     .preview-area img {
-        max-height: 250px;
+        max-height: 200px;
     }
 
     .analyzing-area {
-        padding: var(--spacing-md);
-    }
-
-    .age-result {
-        margin-bottom: var(--spacing-sm);
-    }
-
-    .result-badge {
         padding: var(--spacing-sm);
     }
 
+    .age-result {
+        margin-bottom: 0.5rem;
+    }
+
+    .result-badge {
+        padding: 0.4rem 0.8rem;
+    }
+
+    .result-value strong {
+        font-size: 1.5rem;
+    }
+
     .btn-next {
-        margin-top: var(--spacing-sm);
+        margin-top: 0.5rem;
     }
 
     /* 버튼 크기 및 간격 조정 */
