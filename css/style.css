@@ -1087,21 +1087,35 @@ body {
     }
 }
 
+/* Emoji Color Fix - Stronger Override */
+.emoji-icon {
+    background: none !important;
+    -webkit-text-fill-color: initial !important;
+    text-shadow: none !important;
+    display: inline-block;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+
 /* Snow Effect */
 .snowflake {
     position: fixed;
-    top: -10px;
+    top: -20px;
     color: #fff;
     font-size: 1em;
-    opacity: 0.8;
-    z-index: 9999;
+    opacity: 0.9;
+    z-index: 99999;
     pointer-events: none;
-    animation: fall linear forwards;
-    text-shadow: 0 0 5px #fff;
+    animation: snow-fall linear forwards;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    will-change: transform;
 }
 
-@keyframes fall {
-    to {
-        transform: translateY(105vh);
+@keyframes snow-fall {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(110vh);
     }
 }
