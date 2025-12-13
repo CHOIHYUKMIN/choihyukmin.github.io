@@ -1,7 +1,7 @@
 // Chinese Simplified translations
 const translations_zh = {
     // Start Screen
-    title: "🎄 你的心理年龄<br>是多少岁？ 🎅",
+    title: "<span class='emoji-icon'>🎄</span> 你的心理年龄<br>是多少岁？ <span class='emoji-icon'>🎅</span>",
     subtitle: "AI通过你的照片估算实际年龄，<br>10个问题揭示你的心理年龄",
     btnStart: "开始测试",
 

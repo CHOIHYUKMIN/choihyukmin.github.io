@@ -1,7 +1,7 @@
 // English translations
 const translations_en = {
     // Start Screen
-    title: "🎄 How Old is<br>Your Mind? 🎅",
+    title: "<span class='emoji-icon'>🎄</span> How Old is<br>Your Mind? <span class='emoji-icon'>🎅</span>",
     subtitle: "AI estimates your physical age from your photo,<br>and 10 questions reveal your mental age",
     btnStart: "Start Test",
 

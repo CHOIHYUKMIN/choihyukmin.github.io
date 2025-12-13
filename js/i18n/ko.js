@@ -1,7 +1,7 @@
 // Korean translations
 const translations_ko = {
     // Start Screen
-    title: "🎄 당신의 마음은<br>몇 살인가요? 🎅",
+    title: "<span class='emoji-icon'>🎄</span> 당신의 마음은<br>몇 살인가요? <span class='emoji-icon'>🎅</span>",
     subtitle: "AI가 당신의 얼굴로 실물 나이를 추측하고,<br>10가지 질문으로 마음의 나이를 알려드려요",
     btnStart: "테스트 시작하기",
 
