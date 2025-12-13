@@ -634,38 +634,47 @@ body {
 .language-selector {
     position: fixed;
     top: var(--spacing-lg);
-    right: var(--spacing-lg);
+    left: var(--spacing-lg);
+    /* right → left */
     z-index: 1000;
     display: flex;
-    gap: var(--spacing-xs);
+    gap: 0.25rem;
+    /* 간격 축소 */
     background: var(--bg-card);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-full);
-    padding: var(--spacing-xs);
+    padding: 0.25rem;
+    /* 패딩 축소 */
 }
 
 .lang-btn {
     background: transparent;
     color: var(--text-secondary);
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.6rem;
+    /* 국기용으로 축소 */
     border-radius: var(--radius-full);
-    font-size: 0.9rem;
+    font-size: 1.2rem;
+    /* 국기 크기 */
     font-weight: 500;
     cursor: pointer;
     transition: all var(--transition-fast);
+    line-height: 1;
 }
 
 .lang-btn:hover {
     color: var(--text-primary);
     background: rgba(255, 255, 255, 0.05);
+    transform: scale(1.1);
+    /* 호버 효과 */
 }
 
 .lang-btn.active {
     color: var(--text-primary);
     background: var(--gradient-primary);
     font-weight: 600;
+    transform: scale(1.05);
 }
 
 /* ===========================
@@ -781,13 +790,17 @@ body {
     /* 언어 선택기 조정 */
     .language-selector {
         top: var(--spacing-md);
-        right: var(--spacing-md);
-        padding: 0.25rem;
+        left: var(--spacing-md);
+        /* right → left */
+        padding: 0.2rem;
+        gap: 0.15rem;
     }
 
     .lang-btn {
-        padding: 0.4rem 0.75rem;
-        font-size: 0.85rem;
+        padding: 0.3rem 0.5rem;
+        /* 더 작게 */
+        font-size: 1rem;
+        /* 국기 크기 */
     }
 
     /* 질문 섹션 조정 */
