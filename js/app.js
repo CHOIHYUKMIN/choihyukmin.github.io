@@ -260,36 +260,56 @@ const app = {
 
     // Create snow effect
     startSnowEffect() {
+        // Inject keyframes directly into the page
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes snowfall {
+                0% { transform: translateY(-10px); opacity: 1; }
+                100% { transform: translateY(100vh); opacity: 0.8; }
+            }
+        `;
+        document.head.appendChild(style);
+
         const createSnowflake = () => {
             const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
             snowflake.textContent = ['❄', '❅', '❆'][Math.floor(Math.random() * 3)];
 
-            // Random properties
-            snowflake.style.left = Math.random() * 100 + 'vw';
-            snowflake.style.opacity = Math.random();
-            snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+            // Apply all styles inline
+            const left = Math.random() * 100;
+            const fontSize = Math.random() * 10 + 10;
+            const duration = Math.random() * 3 + 3; // 3-6 seconds
+            const delay = Math.random() * 2;
+
+            snowflake.style.cssText = `
+                position: fixed;
+                top: -20px;
+                left: ${left}vw;
+                color: #fff;
+                font-size: ${fontSize}px;
+                opacity: 0.9;
+                z-index: 999999;
+                pointer-events: none;
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+                animation: snowfall ${duration}s linear ${delay}s forwards;
+            `;
 
             document.body.appendChild(snowflake);
 
-            // Use Web Animations API for reliable performance
-            const duration = Math.random() * 3000 + 3000; // 3~6s
-
-            const animation = snowflake.animate([
-                { transform: 'translateY(-20px)' },
-                { transform: 'translateY(105vh)' }
-            ], {
-                duration: duration,
-                easing: 'linear',
-                fill: 'forwards'
-            });
-
-            // Remove when finished
-            animation.onfinish = () => snowflake.remove();
+            // Remove after animation completes
+            setTimeout(() => {
+                if (snowflake.parentNode) {
+                    snowflake.remove();
+                }
+            }, (duration + delay) * 1000 + 100);
         };
 
-        // Create a snowflake every 300ms
-        setInterval(createSnowflake, 300);
+        // Create snowflakes continuously
+        setInterval(createSnowflake, 200);
+
+        // Create initial batch
+        for (let i = 0; i < 10; i++) {
+            setTimeout(createSnowflake, i * 100);
+        }
     },
 
     // Section navigation
