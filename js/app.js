@@ -1,3 +1,5 @@
+import ARCHETYPES from './archetypes.js';
+
 // Main Application Logic
 const app = {
     // State
@@ -22,6 +24,25 @@ const app = {
         if (age < 60) return 'fifties';
         return 'sixties';
     },
+    // Map age difference to level code
+    mapDiffToLevel(diff) {
+        if (diff >= 10) return 'Y_E';
+        if (diff >= 5) return 'Y_S';
+        if (diff >= 1) return 'Y_M';
+        if (diff === 0) return 'B';
+        if (diff >= -4) return 'M_M';
+        if (diff >= -9) return 'M_S';
+        return 'M_E';
+    },
+    // Pick a random archetype based on gender and diff
+    getArchetype(gender, diff) {
+        const level = this.mapDiffToLevel(diff);
+        const pool = ARCHETYPES[gender][level] || [];
+        if (!pool.length) return null;
+        const idx = Math.floor(Math.random() * pool.length);
+        return pool[idx]; // {code, name, desc}
+    },
+
 
     // Initialize app
     init() {

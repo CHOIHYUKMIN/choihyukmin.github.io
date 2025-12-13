@@ -16,28 +16,11 @@ if (document.readyState === 'loading') {
     initKakao();
 }
 
-// Share to KakaoTalk with result image
+// Share to KakaoTalk with result link only (no image download)
 async function shareToKakao(physicalAge, mentalAge, diffText, resultMessage) {
     if (!window.Kakao || !window.Kakao.isInitialized()) {
-        alert('카카오톡 공유를 사용하려면 Kakao JavaScript Key를 설정해주세요.\n\njs/share.js 파일에서 YOUR_KAKAO_JAVASCRIPT_KEY를 실제 키로 변경하세요.');
+        alert('카카오톡 공유를 사용하려면 Kakao JavaScript Key를 설정해주세요.');
         return;
-    }
-
-    // First, offer to download the result image
-    const shouldDownload = confirm('카카오톡 공유 전에 결과 이미지를 먼저 다운로드하시겠습니까?\n\n이미지를 다운로드하면 카카오톡 대화에서 직접 이미지를 전송할 수 있습니다.');
-
-    if (shouldDownload) {
-        await downloadResultImage();
-
-        // Wait a moment for download to start
-        await new Promise(resolve => setTimeout(resolve, 500));
-
-        const continueShare = confirm('이미지 다운로드가 시작되었습니다.\n\n카카오톡으로 이동하여 다운로드한 이미지를 직접 공유하시겠습니까?\n\n아니오를 누르면 링크 공유를 계속합니다.');
-
-        if (continueShare) {
-            // User will share manually with downloaded image
-            return;
-        }
     }
 
     // Create share URL with result parameters
@@ -50,14 +33,14 @@ async function shareToKakao(physicalAge, mentalAge, diffText, resultMessage) {
         diff: diff
     });
     const shareUrl = `${baseUrl}?${shareParams.toString()}`;
-    const imageUrl = getBaseUrl() + CONFIG.OG_IMAGE;
+    const imageUrl = getBaseUrl() + CONFIG.OG_IMAGE; // static OG image
 
     try {
         window.Kakao.Share.sendDefault({
             objectType: 'feed',
             content: {
                 title: CONFIG.APP_TITLE,
-                description: `나의 실물 나이는 ${physicalAge}세, 마음의 나이는 ${mentalAge}세!\\n${diffText}\\n\\n${resultMessage}`,
+                description: `나의 실물 나이는 ${physicalAge}세, 마음의 나이는 ${mentalAge}세!\n${diffText}\n\n${resultMessage}`,
                 imageUrl: imageUrl,
                 link: {
                     mobileWebUrl: shareUrl,
