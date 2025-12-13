@@ -253,63 +253,6 @@ const app = {
                 console.log('Age detection ready');
             }
         });
-
-        // Start seasonal snow effect ❄️
-        this.startSnowEffect();
-    },
-
-    // Create snow effect
-    startSnowEffect() {
-        // Inject keyframes directly into the page
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes snowfall {
-                0% { transform: translateY(-10px); opacity: 1; }
-                100% { transform: translateY(100vh); opacity: 0.8; }
-            }
-        `;
-        document.head.appendChild(style);
-
-        const createSnowflake = () => {
-            const snowflake = document.createElement('div');
-            snowflake.textContent = ['❄', '❅', '❆'][Math.floor(Math.random() * 3)];
-
-            // Apply all styles inline
-            const left = Math.random() * 100;
-            const fontSize = Math.random() * 10 + 10;
-            const duration = Math.random() * 3 + 3; // 3-6 seconds
-            const delay = Math.random() * 2;
-
-            snowflake.style.cssText = `
-                position: fixed;
-                top: -20px;
-                left: ${left}vw;
-                color: #fff;
-                font-size: ${fontSize}px;
-                opacity: 0.9;
-                z-index: 999999;
-                pointer-events: none;
-                text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
-                animation: snowfall ${duration}s linear ${delay}s forwards;
-            `;
-
-            document.body.appendChild(snowflake);
-
-            // Remove after animation completes
-            setTimeout(() => {
-                if (snowflake.parentNode) {
-                    snowflake.remove();
-                }
-            }, (duration + delay) * 1000 + 100);
-        };
-
-        // Create snowflakes continuously
-        setInterval(createSnowflake, 200);
-
-        // Create initial batch
-        for (let i = 0; i < 10; i++) {
-            setTimeout(createSnowflake, i * 100);
-        }
     },
 
     // Section navigation
