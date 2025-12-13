@@ -18,7 +18,9 @@ const app = {
         if (age < 20) return 'teen';
         if (age < 30) return 'twenties';
         if (age < 40) return 'thirties';
-        return 'forties';
+        if (age < 50) return 'forties';
+        if (age < 60) return 'fifties';
+        return 'sixties';
     },
 
     // Initialize app

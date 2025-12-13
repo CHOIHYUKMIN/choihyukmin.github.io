@@ -373,6 +373,166 @@ const translations_en = {
             ]
         },
 
+        // Fifties (50-59)
+        fifties: {
+            common: [
+                {
+                    question: "How do you spend your leisure time?",
+                    options: [
+                        "👨‍👩‍👧 With family/grandchildren",
+                        "⛳ Golf/hiking/exercise",
+                        "📚 Reading/culture",
+                        "🧘 Meditation/rest"
+                    ],
+                    weight: 1.0
+                },
+                {
+                    question: "Health management?",
+                    options: [
+                        "🏥 Regular checkups thoroughly",
+                        "💊 Medication/supplements",
+                        "🏃 Consistent exercise",
+                        "🥗 Strict diet management"
+                    ],
+                    weight: 1.1
+                },
+                {
+                    question: "Post-retirement plans?",
+                    options: [
+                        "💼 Continue working",
+                        "🌍 Travel/hobbies",
+                        "👨‍👩‍👧 Time with family",
+                        "🤔 Still thinking"
+                    ],
+                    weight: 1.2
+                }
+            ],
+            male: [
+                {
+                    question: "Retirement preparation status?",
+                    options: [
+                        "✅ Well prepared",
+                        "📊 Preparing",
+                        "😰 Insufficient",
+                        "🤷 Haven't thought about it"
+                    ],
+                    weight: 1.2
+                },
+                {
+                    question: "Main activities?",
+                    options: [
+                        "⛳ Golf",
+                        "🎣 Fishing/hiking",
+                        "📖 Reading/studying",
+                        "🏠 Rest at home"
+                    ],
+                    weight: 1.0
+                }
+            ],
+            female: [
+                {
+                    question: "About caring for grandchildren?",
+                    options: [
+                        "👶 Actively involved",
+                        "🤝 Occasional help",
+                        "🚫 Living independently",
+                        "😅 No grandchildren yet"
+                    ],
+                    weight: 1.1
+                },
+                {
+                    question: "Personal time usage?",
+                    options: [
+                        "🎨 Hobbies/volunteering",
+                        "👥 Friend gatherings",
+                        "💆 Self-care",
+                        "📺 TV/rest"
+                    ],
+                    weight: 1.0
+                }
+            ]
+        },
+
+        // Sixties and above (60+)
+        sixties: {
+            common: [
+                {
+                    question: "Daily routine?",
+                    options: [
+                        "🌅 Regular lifestyle",
+                        "🏃 Exercise-focused",
+                        "👥 Active social life",
+                        "🏠 Comfortable at home"
+                    ],
+                    weight: 1.0
+                },
+                {
+                    question: "Health management priority?",
+                    options: [
+                        "🏥 Regular hospital checkups",
+                        "💊 Medication management",
+                        "🥗 Diet management",
+                        "🧘 Stress management"
+                    ],
+                    weight: 1.1
+                },
+                {
+                    question: "What's most important in life?",
+                    options: [
+                        "💪 Health",
+                        "👨‍👩‍👧 Family",
+                        "🧘 Peace of mind",
+                        "🌟 Meaning of life"
+                    ],
+                    weight: 1.0
+                }
+            ],
+            male: [
+                {
+                    question: "Retirement life?",
+                    options: [
+                        "💼 Still working",
+                        "🎯 Focused on hobbies",
+                        "👨‍👩‍👧 Family-centered",
+                        "🧘 Leisurely"
+                    ],
+                    weight: 1.1
+                },
+                {
+                    question: "Social activities?",
+                    options: [
+                        "👥 Actively participate",
+                        "🤝 Occasional meetings",
+                        "📚 Personal activities",
+                        "🏠 Mostly at home"
+                    ],
+                    weight: 1.0
+                }
+            ],
+            female: [
+                {
+                    question: "Relationship with grandchildren?",
+                    options: [
+                        "👶 Frequent care",
+                        "💕 Occasional visits",
+                        "🤝 Appropriate distance",
+                        "😅 No grandchildren"
+                    ],
+                    weight: 1.1
+                },
+                {
+                    question: "Leisure activities?",
+                    options: [
+                        "🎨 Culture/hobby activities",
+                        "👥 Friend gatherings",
+                        "🧘 Meditation/yoga",
+                        "📺 TV/rest"
+                    ],
+                    weight: 1.0
+                }
+            ]
+        },
+
         // Universal questions (age/gender independent)
         universal: [
             {
