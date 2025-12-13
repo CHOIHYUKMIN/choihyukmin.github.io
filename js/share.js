@@ -44,18 +44,23 @@ async function shareToKakao(physicalAge, mentalAge, diffText, resultMessage, arc
     const shareUrl = `${baseUrl}?${shareParams.toString()}`;
     const imageUrl = getBaseUrl() + CONFIG.OG_IMAGE; // static OG image
 
-    // Build description with archetype if available
-    let description = i18n.t('shareDesc')
+    // Build title with age results (move from description to title)
+    let title = i18n.t('shareDesc')
         .replace('{pa}', physicalAge)
         .replace('{ma}', mentalAge);
-    description += `\n${diffText}\n\n${resultMessage}`;
+
+    // Description contains the detailed message
+    let description = `${diffText || ''}\n${resultMessage || ''}`;
+
+    // Append app name to description if needed, or keep it simple
+    // description += `\n\n${CONFIG.APP_TITLE}`;
 
     // if (archetype) {
     //    description += `\n\n✨ ${archetype.name}\n${archetype.desc}`;
     // }
 
-    // Determine title
-    let title = CONFIG.APP_TITLE;
+    // Determine title (Override previous logic)
+    // let title = CONFIG.APP_TITLE;
     // if (archetype) {
     //     // Use archetype name as title
     //     title = i18n.t('shareTitleArchetype').replace('{name}', archetype.name);
