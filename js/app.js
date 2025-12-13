@@ -119,6 +119,26 @@ const app = {
         return emojiMap[messageKey] || '⚖️';
     },
 
+    // Get archetype by code
+    getArchetypeByCode(code) {
+        const archetypes = i18n.t('archetypes');
+        if (!archetypes) return null;
+
+        // Search in male archetypes
+        for (const level in archetypes.male) {
+            const found = archetypes.male[level].find(a => a.code === code);
+            if (found) return found;
+        }
+
+        // Search in female archetypes
+        for (const level in archetypes.female) {
+            const found = archetypes.female[level].find(a => a.code === code);
+            if (found) return found;
+        }
+
+        return null;
+    },
+
 
     // Initialize app
     init() {
@@ -152,6 +172,7 @@ const app = {
         const physicalAge = parseInt(urlParams.get('pa'));
         const mentalAge = parseInt(urlParams.get('ma'));
         const diff = parseInt(urlParams.get('diff'));
+        const archetypeCode = urlParams.get('arc');
 
         if (isNaN(physicalAge) || isNaN(mentalAge)) {
             // Invalid parameters, show start section instead
@@ -172,6 +193,25 @@ const app = {
         const message = i18n.t(messageKey);
 
         document.getElementById('shared-message-text').textContent = message;
+
+        // Display shared archetype if available
+        if (archetypeCode) {
+            const archetype = this.getArchetypeByCode(archetypeCode);
+            if (archetype) {
+                const archetypeContainer = document.getElementById('shared-archetype-info');
+                if (archetypeContainer) {
+                    const archetypeTitle = i18n.t('archetypeTitle');
+                    archetypeContainer.innerHTML = `
+                        <div class="archetype-badge">
+                            <div class="archetype-title">${archetypeTitle}</div>
+                            <div class="archetype-name">✨ ${archetype.name}</div>
+                            <div class="archetype-desc">${archetype.desc}</div>
+                        </div>
+                    `;
+                    archetypeContainer.classList.remove('hidden');
+                }
+            }
+        }
 
         // Show shared section
         this.showSection('shared');

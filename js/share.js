@@ -26,12 +26,19 @@ async function shareToKakao(physicalAge, mentalAge, diffText, resultMessage, arc
     // Create share URL with result parameters
     const baseUrl = getShareUrl();
     const diff = mentalAge - physicalAge;
-    const shareParams = new URLSearchParams({
+    const params = {
         shared: 'true',
         pa: physicalAge,
         ma: mentalAge,
         diff: diff
-    });
+    };
+
+    // Add archetype code if available
+    if (archetype && archetype.code) {
+        params.arc = archetype.code;
+    }
+
+    const shareParams = new URLSearchParams(params);
     const shareUrl = `${baseUrl}?${shareParams.toString()}`;
     const imageUrl = getBaseUrl() + CONFIG.OG_IMAGE; // static OG image
 

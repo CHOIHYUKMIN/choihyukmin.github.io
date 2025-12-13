@@ -906,32 +906,36 @@ body {
     }
 
     .age-comparison {
-        flex-direction: column;
-        gap: var(--spacing-sm);
+        flex-direction: row;
+        /* Keep horizontal */
+        gap: var(--spacing-xs);
+        /* Reduce gap */
         margin: var(--spacing-md) 0;
     }
 
     .age-circle {
-        width: 120px;
-        height: 120px;
+        width: 100px;
+        /* Smaller circles */
+        height: 100px;
     }
 
     .circle-label {
-        font-size: 0.75rem;
+        font-size: 0.65rem;
     }
 
     .circle-value {
-        font-size: 2rem;
+        font-size: 1.6rem;
+        /* Smaller value */
     }
 
     .circle-unit {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
     }
 
     .vs-badge {
-        transform: rotate(90deg);
-        font-size: 1rem;
-        margin: -0.5rem 0;
+        font-size: 0.9rem;
+        /* Smaller VS badge */
+        margin: 0;
     }
 
     .age-difference {
