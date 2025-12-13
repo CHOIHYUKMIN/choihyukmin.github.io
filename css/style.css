@@ -1105,20 +1105,6 @@ body {
     opacity: 0.9;
     z-index: 99999;
     pointer-events: none;
-    /* Separated properties to allow JS to control duration */
-    animation-name: snow-fall;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
     will-change: transform;
-}
-
-@keyframes snow-fall {
-    0% {
-        transform: translateY(0);
-    }
-
-    100% {
-        transform: translateY(110vh);
-    }
 }

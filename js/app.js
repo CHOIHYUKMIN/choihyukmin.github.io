@@ -267,16 +267,25 @@ const app = {
 
             // Random properties
             snowflake.style.left = Math.random() * 100 + 'vw';
-            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's'; // 2~5s
             snowflake.style.opacity = Math.random();
             snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
 
             document.body.appendChild(snowflake);
 
-            // Remove after animation
-            setTimeout(() => {
-                snowflake.remove();
-            }, 5000);
+            // Use Web Animations API for reliable performance
+            const duration = Math.random() * 3000 + 3000; // 3~6s
+
+            const animation = snowflake.animate([
+                { transform: 'translateY(-20px)' },
+                { transform: 'translateY(105vh)' }
+            ], {
+                duration: duration,
+                easing: 'linear',
+                fill: 'forwards'
+            });
+
+            // Remove when finished
+            animation.onfinish = () => snowflake.remove();
         };
 
         // Create a snowflake every 300ms
