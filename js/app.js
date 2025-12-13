@@ -1,4 +1,4 @@
-import ARCHETYPES from './archetypes.js';
+// Removed ARCHETYPES import - now using i18n
 
 // Main Application Logic
 const app = {
@@ -38,7 +38,9 @@ const app = {
     // Pick a random archetype based on gender and diff
     getArchetype(gender, diff) {
         const level = this.mapDiffToLevel(diff);
-        const pool = ARCHETYPES[gender][level] || [];
+        const archetypes = i18n.t('archetypes');
+        if (!archetypes || !archetypes[gender] || !archetypes[gender][level]) return null;
+        const pool = archetypes[gender][level] || [];
         if (!pool.length) return null;
         const idx = Math.floor(Math.random() * pool.length);
         return pool[idx]; // {code, name, desc}
@@ -430,9 +432,10 @@ const app = {
         if (this.archetype) {
             const archetypeContainer = document.getElementById('archetype-info');
             if (archetypeContainer) {
+                const archetypeTitle = i18n.t('archetypeTitle');
                 archetypeContainer.innerHTML = `
                     <div class="archetype-badge">
-                        <div class="archetype-title">당신의 캐릭터 유형</div>
+                        <div class="archetype-title">${archetypeTitle}</div>
                         <div class="archetype-name">✨ ${this.archetype.name}</div>
                         <div class="archetype-desc">${this.archetype.desc}</div>
                     </div>

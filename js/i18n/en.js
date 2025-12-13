@@ -27,6 +27,7 @@ const translations_en = {
     physicalAgeLabel: "Physical Age",
     mentalAgeLabel: "Mental Age",
     ageUnit: "yrs",
+    archetypeTitle: "Your Character Type",
 
     // Result Messages (9 different cases based on age difference)
     resultVeryYoung: "Little Prince/Princess! Eternal teenage spirit! 🌟",
@@ -566,6 +567,141 @@ const translations_en = {
                 weight: 1.0
             }
         ]
+    },
+
+    // Archetypes
+    archetypes: {
+        male: {
+            Y_E: [
+                { code: "Y_E_M1", name: "Flame Warrior", desc: "Burning passion and adventurous spirit" },
+                { code: "Y_E_M2", name: "Thunder Hunter", desc: "Bold hunter chasing lightning" },
+                { code: "Y_E_M3", name: "Starlight Knight", desc: "Knight of light cutting through the night sky" },
+                { code: "Y_E_M4", name: "Wind Rogue", desc: "Rogue riding the free wind" },
+                { code: "Y_E_M5", name: "Lava Mage", desc: "Mage wielding hot lava" },
+                { code: "Y_E_M6", name: "Galaxy Wanderer", desc: "Wanderer traversing the galaxy" },
+                { code: "Y_E_M7", name: "Storm Knight", desc: "Warrior wielding storms" },
+                { code: "Y_E_M8", name: "Light Guardian", desc: "Guardian protecting the light" }
+            ],
+            Y_S: [
+                { code: "Y_S_M1", name: "Wind Hunter", desc: "Adventurer hunting on the wind" },
+                { code: "Y_S_M2", name: "Ocean Explorer", desc: "Explorer cutting through waves" },
+                { code: "Y_S_M3", name: "Mountain Conqueror", desc: "Hero conquering high mountains" },
+                { code: "Y_S_M4", name: "Flame Dancer", desc: "Dancer handling flames gracefully" },
+                { code: "Y_S_M5", name: "Electric Knight", desc: "Knight wielding electricity" },
+                { code: "Y_S_M6", name: "Teal Priest", desc: "Priest of the blue sea" },
+                { code: "Y_S_M7", name: "Galaxy Musician", desc: "Musician playing starlight" },
+                { code: "Y_S_M8", name: "Solar Shield", desc: "Warrior with sunlight shield" }
+            ],
+            Y_M: [
+                { code: "Y_M_M1", name: "Adventurer", desc: "Explorer seeking new paths" },
+                { code: "Y_M_M2", name: "Dreaming Star", desc: "One who dreams while gazing at stars" },
+                { code: "Y_M_M3", name: "Wanderer", desc: "Peaceful soul walking through nature" },
+                { code: "Y_M_M4", name: "Youth Explorer", desc: "Explorer filled with youthful curiosity" },
+                { code: "Y_M_M5", name: "Ocean Wave", desc: "One flowing with the waves" },
+                { code: "Y_M_M6", name: "Forest Spirit", desc: "Spirit loving the forest" },
+                { code: "Y_M_M7", name: "Silver Hunter", desc: "Hunter with silver bow" },
+                { code: "Y_M_M8", name: "Sky Pilot", desc: "Pilot flying freely in the sky" }
+            ],
+            B: [
+                { code: "B_M1", name: "Mediator", desc: "One who balances and resolves conflicts" },
+                { code: "B_M2", name: "Harmonizer", desc: "One who weaves everything harmoniously" },
+                { code: "B_M3", name: "Peace Guardian", desc: "Guardian protecting peace" },
+                { code: "B_M4", name: "Sage of Balance", desc: "Sage with balance and wisdom" },
+                { code: "B_M5", name: "Time Traveler", desc: "Traveler understanding the flow of time" },
+                { code: "B_M6", name: "Light and Shadow", desc: "Being embracing both light and darkness" },
+                { code: "B_M7", name: "Abyss Explorer", desc: "One exploring inner depths" },
+                { code: "B_M8", name: "Earth Guardian", desc: "Guardian protecting the earth" }
+            ],
+            M_M: [
+                { code: "M_M_M1", name: "Iron Knight", desc: "Knight with strong defense and conviction" },
+                { code: "M_M_M2", name: "Gale Warrior", desc: "Calm yet powerful warrior" },
+                { code: "M_M_M3", name: "Silent Shield", desc: "Strong shield in silence" },
+                { code: "M_M_M4", name: "Mountain Guardian", desc: "Guardian solid as mountains" },
+                { code: "M_M_M5", name: "Obsidian Sage", desc: "Wisdom deep as black stone" },
+                { code: "M_M_M6", name: "Ocean Lighthouse", desc: "Lighthouse illuminating the sea" },
+                { code: "M_M_M7", name: "Moonlight Knight", desc: "Knight embracing moonlight" },
+                { code: "M_M_M8", name: "Mystic Priest", desc: "Combining strength and mystery" }
+            ],
+            M_S: [
+                { code: "M_S_M1", name: "Commander", desc: "Leader guiding organizations" },
+                { code: "M_S_M2", name: "Blacksmith", desc: "Blacksmith forging strength" },
+                { code: "M_S_M3", name: "Strategist", desc: "Tactician planning strategies" },
+                { code: "M_S_M4", name: "Protector", desc: "Guardian protecting surroundings" },
+                { code: "M_S_M5", name: "War Sage", desc: "Sage knowing war and peace" },
+                { code: "M_S_M6", name: "Immortal Knight", desc: "Knight fighting eternally" },
+                { code: "M_S_M7", name: "Obsidian Shield", desc: "Warrior with black shield" },
+                { code: "M_S_M8", name: "Wind General", desc: "General commanding the wind" }
+            ],
+            M_E: [
+                { code: "M_E_M1", name: "Grand Sage", desc: "Sage holding all knowledge" },
+                { code: "M_E_M2", name: "Time Master", desc: "Being controlling time" },
+                { code: "M_E_M3", name: "Cosmic Priest", desc: "Priest communing with the universe" },
+                { code: "M_E_M4", name: "Immortal King", desc: "King ruling eternally" },
+                { code: "M_E_M5", name: "Sky Sentinel", desc: "Sentinel guarding the heavens" },
+                { code: "M_E_M6", name: "Abyss Sage", desc: "Sage seeing into deep abyss" },
+                { code: "M_E_M7", name: "Starlight Lord", desc: "Lord ruling the starlight" },
+                { code: "M_E_M8", name: "Eternal Flame", desc: "Flame burning eternally" }
+            ]
+        },
+        female: {
+            Y_E: [
+                { code: "Y_E_F1", name: "Sunshine Fairy", desc: "Fairy embracing bright sunlight" },
+                { code: "Y_E_F2", name: "Storm Warrior", desc: "Warrior wielding storms" },
+                { code: "Y_E_F3", name: "Moonlight Dancer", desc: "Dancer under moonlight" },
+                { code: "Y_E_F4", name: "Ocean Queen", desc: "Queen ruling the seas" },
+                { code: "Y_E_F5", name: "Galaxy Spirit", desc: "Spirit embracing the galaxy" },
+                { code: "Y_E_F6", name: "Flame Sorceress", desc: "Sorceress wielding flames" },
+                { code: "Y_E_F7", name: "Thunder Goddess", desc: "Goddess calling thunder" },
+                { code: "Y_E_F8", name: "Light Guardian", desc: "Guardian protecting light" }
+            ],
+            Y_S: [
+                { code: "Y_S_F1", name: "Sea Fairy", desc: "Fairy playing with waves" },
+                { code: "Y_S_F2", name: "Mountain Warrior", desc: "Warrior climbing mountains" },
+                { code: "Y_S_F3", name: "Solar Priestess", desc: "Priestess with solar power" },
+                { code: "Y_S_F4", name: "Silver Dancer", desc: "Dancer wielding silver light" },
+                { code: "Y_S_F5", name: "Wind Maiden", desc: "Maiden riding the wind" },
+                { code: "Y_S_F6", name: "Starlight Musician", desc: "Musician playing starlight" },
+                { code: "Y_S_F7", name: "Teal Queen", desc: "Queen of the blue sea" },
+                { code: "Y_S_F8", name: "Golden Knight", desc: "Knight in golden armor" }
+            ],
+            Y_M: [
+                { code: "Y_M_F1", name: "Dreaming Star", desc: "One dreaming while gazing at stars" },
+                { code: "Y_M_F2", name: "Forest Fairy", desc: "Fairy wandering the forest" },
+                { code: "Y_M_F3", name: "Flower Path Explorer", desc: "Explorer on flower paths" },
+                { code: "Y_M_F4", name: "Wind Dancer", desc: "Dancer riding the wind" },
+                { code: "Y_M_F5", name: "Galaxy Wanderer", desc: "Wanderer drifting through galaxy" },
+                { code: "Y_M_F6", name: "Beach Poet", desc: "Poet writing by the beach" },
+                { code: "Y_M_F7", name: "Moonlight Spirit", desc: "Spirit embracing moonlight" },
+                { code: "Y_M_F8", name: "Clear Sky Explorer", desc: "Explorer of clear skies" }
+            ],
+            B: [
+                { code: "B_F1", name: "Harmonizer", desc: "One weaving everything harmoniously" },
+                { code: "B_F2", name: "Peace Guardian", desc: "Guardian protecting peace" },
+                { code: "B_F3", name: "Time Traveler", desc: "Traveler understanding time's flow" },
+                { code: "B_F4", name: "Light and Shadow", desc: "Being embracing light and darkness" },
+                { code: "B_F5", name: "Earth Guardian", desc: "Guardian protecting the earth" },
+                { code: "B_F6", name: "Abyss Explorer", desc: "Explorer of inner depths" },
+                { code: "B_F7", name: "Galaxy Sage", desc: "Sage gazing at the galaxy" },
+                { code: "B_F8", name: "Wind Sage", desc: "Sage reading the wind" }
+            ],
+            M_M: [
+                { code: "M_M_F1", name: "Silver Priestess", desc: "Priestess in silver" },
+                { code: "M_M_F2", name: "Gale Warrior", desc: "Calm yet powerful warrior" },
+                { code: "M_M_F3", name: "Silent Shield", desc: "Strong shield in silence" },
+                { code: "M_M_F4", name: "Mountain Guardian", desc: "Guardian solid as mountains" },
+                { code: "M_M_F5", name: "Obsidian Sage", desc: "Wisdom deep as black stone" },
+                { code: "M_M_F6", name: "Ocean Lighthouse", desc: "Lighthouse illuminating the sea" },
+                { code: "M_M_F7", name: "Moonlight Knight", desc: "Knight embracing moonlight" },
+                { code: "M_M_F8", name: "Mystic Priest", desc: "Combining strength and mystery" }
+            ],
+            M_S: [
+                { code: "M_S_F1", name: "Sage Queen", desc: "Queen with wisdom and power" },
+                { code: "M_S_F2", name: "Protector", desc: "Guardian protecting surroundings" },
+                { code: "M_S_F3", name: "Strategist", desc: "Tactician planning strategies" },
+                { code: "M_S_F4", name: "Blacksmith", desc: "Blacksmith forging strength" }
+            ],
+            M_E: []
+        }
     }
 };
 
