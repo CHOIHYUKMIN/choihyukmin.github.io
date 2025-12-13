@@ -919,32 +919,12 @@ body {
     }
 
     /* 모바일에서 섹션 높이를 유동적으로 조정 */
-    #start-section {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: var(--spacing-lg) 0;
-    }
-
+    #start-section,
     #upload-section,
-    #questions-section {
-        min-height: 100vh;
-        display: flex;
-        align-items: flex-start;
-        /* 상단 정렬 */
-        justify-content: center;
-        padding: var(--spacing-lg) 0;
-        padding-top: 80px;
-        /* 상단 여백 */
-    }
-
+    #questions-section,
     #result-section {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: var(--spacing-lg) 0;
+        min-height: auto;
+        padding: var(--spacing-md) 0;
     }
 
     #start-section .container,
