@@ -17,7 +17,7 @@ if (document.readyState === 'loading') {
 }
 
 // Share to KakaoTalk with result link only (no image download)
-async function shareToKakao(physicalAge, mentalAge, diffText, resultMessage) {
+async function shareToKakao(physicalAge, mentalAge, diffText, resultMessage, archetype = null) {
     if (!window.Kakao || !window.Kakao.isInitialized()) {
         alert('카카오톡 공유를 사용하려면 Kakao JavaScript Key를 설정해주세요.');
         return;
@@ -35,12 +35,18 @@ async function shareToKakao(physicalAge, mentalAge, diffText, resultMessage) {
     const shareUrl = `${baseUrl}?${shareParams.toString()}`;
     const imageUrl = getBaseUrl() + CONFIG.OG_IMAGE; // static OG image
 
+    // Build description with archetype if available
+    let description = `나의 실물 나이는 ${physicalAge}세, 마음의 나이는 ${mentalAge}세!\n${diffText}\n\n${resultMessage}`;
+    if (archetype) {
+        description += `\n\n✨ 캐릭터 유형: ${archetype.name}\n${archetype.desc}`;
+    }
+
     try {
         window.Kakao.Share.sendDefault({
             objectType: 'feed',
             content: {
                 title: CONFIG.APP_TITLE,
-                description: `나의 실물 나이는 ${physicalAge}세, 마음의 나이는 ${mentalAge}세!\n${diffText}\n\n${resultMessage}`,
+                description: description,
                 imageUrl: imageUrl,
                 link: {
                     mobileWebUrl: shareUrl,

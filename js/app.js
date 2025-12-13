@@ -14,6 +14,7 @@ const app = {
     answers: [],
     totalScore: 0,
     currentQuestionSet: [],
+    archetype: null,
 
     // Helper: Get age group from physical age
     getAgeGroup(age) {
@@ -373,6 +374,11 @@ const app = {
     calculateAndShowResult() {
         this.mentalAge = calculateMentalAge(this.totalScore, this.currentQuestionSet.length);
 
+        // Get archetype based on gender and age difference
+        const diff = this.mentalAge - this.physicalAge;
+        this.archetype = this.getArchetype(this.gender, diff);
+        console.log('Selected archetype:', this.archetype);
+
         // Show result section
         this.showSection('result');
 
@@ -381,7 +387,6 @@ const app = {
         document.getElementById('result-mental-age').textContent = this.mentalAge;
 
         // Calculate difference
-        const diff = this.mentalAge - this.physicalAge;
         const ageUnit = i18n.t('ageUnit');
         const diffText = diff > 0 ? `+${diff}` : `${diff}`;
         document.getElementById('diff-value').textContent = `${diffText}${ageUnit}`;
@@ -420,6 +425,21 @@ const app = {
 
         document.getElementById('message-emoji').textContent = emoji;
         document.getElementById('message-text').textContent = message;
+
+        // Display archetype if available
+        if (this.archetype) {
+            const archetypeContainer = document.getElementById('archetype-info');
+            if (archetypeContainer) {
+                archetypeContainer.innerHTML = `
+                    <div class="archetype-badge">
+                        <div class="archetype-title">당신의 캐릭터 유형</div>
+                        <div class="archetype-name">✨ ${this.archetype.name}</div>
+                        <div class="archetype-desc">${this.archetype.desc}</div>
+                    </div>
+                `;
+                archetypeContainer.classList.remove('hidden');
+            }
+        }
 
         // Store message for sharing
         this.resultMessage = message;
@@ -466,7 +486,7 @@ const app = {
         const diff = this.mentalAge - this.physicalAge;
         const diffText = diff > 0 ? `${diff}살 더 성숙해요!` : diff < 0 ? `${Math.abs(diff)}살 더 젊어요!` : '딱 맞아요!';
         const resultMessage = this.resultMessage || '재미있는 결과가 나왔어요!';
-        shareToKakao(this.physicalAge, this.mentalAge, diffText, resultMessage);
+        shareToKakao(this.physicalAge, this.mentalAge, diffText, resultMessage, this.archetype);
     },
 
     // Share to X (Twitter)
@@ -493,6 +513,7 @@ const app = {
         this.answers = [];
         this.totalScore = 0;
         this.currentQuestionSet = [];
+        this.archetype = null;
 
         // Reset UI
         document.getElementById('upload-area').classList.remove('hidden');

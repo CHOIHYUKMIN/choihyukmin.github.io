@@ -539,6 +539,53 @@ body {
     font-weight: 600;
 }
 
+/* Archetype Container */
+.archetype-container {
+    margin: var(--spacing-lg) 0;
+}
+
+.archetype-badge {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    text-align: center;
+    transition: all var(--transition-medium);
+}
+
+.archetype-badge:hover {
+    border-color: rgba(102, 126, 234, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+}
+
+.archetype-title {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.archetype-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--spacing-xs);
+}
+
+.archetype-desc {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+
 .share-buttons {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -908,6 +955,23 @@ body {
     .message-text {
         font-size: 1rem;
         line-height: 1.5;
+    }
+
+    /* Archetype mobile styles */
+    .archetype-badge {
+        padding: var(--spacing-md);
+    }
+
+    .archetype-title {
+        font-size: 0.75rem;
+    }
+
+    .archetype-name {
+        font-size: 1.3rem;
+    }
+
+    .archetype-desc {
+        font-size: 0.9rem;
     }
 
     /* 광고 영역 축소 */
