@@ -110,6 +110,7 @@ const translations_ko = {
     btnMyTest: "나도 테스트하기 🎈",
     linkCopied: "✓ 링크가 복사되었습니다!",
     shareDesc: "나의 실물 나이는 {pa}세, 마음의 나이는 {ma}세!",
+    shareTitleArchetype: "내 캐릭터 유형: {name} ✨",
 
     // Errors
     errorNoFace: "얼굴을 찾을 수 없습니다. 정면 얼굴이 잘 보이는 사진을 올려주세요.",

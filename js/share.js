@@ -52,13 +52,22 @@ async function shareToKakao(physicalAge, mentalAge, diffText, resultMessage, arc
         description += `\n\n✨ ${archetype.name}\n${archetype.desc}`;
     }
 
+    // Determine title
+    let title = CONFIG.APP_TITLE;
+    if (archetype) {
+        // Use archetype name as title
+        title = i18n.t('shareTitleArchetype').replace('{name}', archetype.name);
+    }
+
     try {
         window.Kakao.Share.sendDefault({
             objectType: 'feed',
             content: {
-                title: CONFIG.APP_TITLE,
+                title: title,
                 description: description,
                 imageUrl: imageUrl,
+                imageWidth: 800,
+                imageHeight: 400,
                 link: {
                     mobileWebUrl: shareUrl,
                     webUrl: shareUrl,

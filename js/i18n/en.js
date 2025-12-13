@@ -110,6 +110,7 @@ const translations_en = {
     btnMyTest: "Take My Test 🎈",
     linkCopied: "✓ Link copied to clipboard!",
     shareDesc: "My physical age is {pa}, my mental age is {ma}!",
+    shareTitleArchetype: "My Character Type: {name} ✨",
 
     // Errors
     errorNoFace: "No face detected. Please upload a photo with a clear frontal face.",

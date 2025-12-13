@@ -110,6 +110,7 @@ const translations_zh = {
     btnMyTest: "我也要测试 🎈",
     linkCopied: "✓ 链接已复制！",
     shareDesc: "我的实际年龄是 {pa} 岁，心理年龄是 {ma} 岁！",
+    shareTitleArchetype: "我的角色类型: {name} ✨",
 
     // Errors
     errorNoFace: "未检测到面部。请上传正面清晰的照片。",
