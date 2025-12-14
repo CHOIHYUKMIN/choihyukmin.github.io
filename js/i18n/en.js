@@ -112,6 +112,11 @@ const translations_en = {
     shareDesc: "📸 Physical Age: {pa}\n🧠 Mental Age: {ma}",
     // shareTitleArchetype: "My Character Type: {name} ✨",
 
+    // Footer
+    privacyPolicy: "Privacy Policy",
+    termsOfService: "Terms of Service",
+    contact: "Contact",
+
     // Errors
     errorNoFace: "No face detected. Please upload a photo with a clear frontal face.",
     errorDownload: "Failed to save image. Please try again.",

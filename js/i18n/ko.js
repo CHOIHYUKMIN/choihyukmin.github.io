@@ -112,6 +112,11 @@ const translations_ko = {
     shareDesc: "📸 실물 나이: {pa}세\n🧠 마음의 나이: {ma}세",
     // shareTitleArchetype: "나는: {name} ✨",
 
+    // Footer
+    privacyPolicy: "개인정보처리방침",
+    termsOfService: "이용약관",
+    contact: "문의하기",
+
     // Errors
     errorNoFace: "얼굴을 찾을 수 없습니다. 정면 얼굴이 잘 보이는 사진을 올려주세요.",
     errorDownload: "이미지 저장에 실패했습니다. 다시 시도해주세요.",

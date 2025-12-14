@@ -112,6 +112,11 @@ const translations_zh = {
     shareDesc: "📸 实际年龄: {pa}岁\n🧠 心理年龄: {ma}岁",
     // shareTitleArchetype: "我的角色类型: {name} ✨",
 
+    // Footer
+    privacyPolicy: "隐私政策",
+    termsOfService: "服务条款",
+    contact: "联系我们",
+
     // Errors
     errorNoFace: "未检测到面部。请上传正面清晰的照片。",
     errorDownload: "保存图片失败，请重试。",

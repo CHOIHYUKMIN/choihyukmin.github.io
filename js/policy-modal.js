@@ -236,9 +236,36 @@ const termsContent = {
 };
 
 function loadPrivacy(lang) {
+    const titles = {
+        ko: '개인정보처리방침',
+        en: 'Privacy Policy',
+        zh: '隐私政策'
+    };
+    const dates = {
+        ko: '<strong>최종 수정일:</strong> 2024년 12월 13일',
+        en: '<strong>Last updated:</strong> December 13, 2024',
+        zh: '<strong>最后更新：</strong>2024年12月13日'
+    };
+
+    document.querySelector('#privacy-modal h1').textContent = titles[lang] || titles.ko;
+    document.querySelector('#privacy-modal h1 + p').innerHTML = dates[lang] || dates.ko;
     document.getElementById('privacy-text').innerHTML = privacyContent[lang] || privacyContent.ko;
 }
 
 function loadTerms(lang) {
+    const titles = {
+        ko: '이용약관',
+        en: 'Terms of Service',
+        zh: '服务条款'
+    };
+    const dates = {
+        ko: '<strong>최종 수정일:</strong> 2024년 12월 13일',
+        en: '<strong>Last updated:</strong> December 13, 2024',
+        zh: '<strong>最后更新：</strong>2024年12月13日'
+    };
+
+    document.querySelector('#terms-modal h1').textContent = titles[lang] || titles.ko;
+    document.querySelector('#terms-modal h1 + p').innerHTML = dates[lang] || dates.ko;
     document.getElementById('terms-text').innerHTML = termsContent[lang] || termsContent.ko;
 }
+
