@@ -2,18 +2,34 @@
 
 // Initialize Kakao SDK
 function initKakao() {
-    if (window.Kakao && !window.Kakao.isInitialized()) {
-        const kakaoKey = '2b78d22d6aa77c493c1ce9ada6aee71b';
-        window.Kakao.init(kakaoKey);
-        console.log('Kakao SDK initialized');
+    try {
+        if (!window.Kakao) {
+            console.error('Kakao SDK not loaded');
+            return;
+        }
+
+        if (!window.Kakao.isInitialized()) {
+            // Use CONFIG if available, otherwise fallback to hardcoded key
+            const kakaoKey = (typeof CONFIG !== 'undefined' && CONFIG.KAKAO_KEY)
+                ? CONFIG.KAKAO_KEY
+                : '2b78d22d6aa77c493c1ce9ada6aee71b';
+            window.Kakao.init(kakaoKey);
+            console.log('Kakao SDK initialized successfully with key:', kakaoKey.substring(0, 10) + '...');
+        } else {
+            console.log('Kakao SDK already initialized');
+        }
+    } catch (error) {
+        console.error('Failed to initialize Kakao SDK:', error);
     }
 }
 
-// Call init when DOM is loaded
+// Call init when DOM is loaded and after a small delay to ensure CONFIG is loaded
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initKakao);
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(initKakao, 100);
+    });
 } else {
-    initKakao();
+    setTimeout(initKakao, 100);
 }
 
 // Share to KakaoTalk with result link only (no image download)

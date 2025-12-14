@@ -4,13 +4,13 @@ const CONFIG = {
     // GitHub Pages 예시: 'https://yourusername.github.io/mindAge/'
     // Netlify 예시: 'https://your-app.netlify.app/'
     // Vercel 예시: 'https://your-app.vercel.app/'
-    PRODUCTION_URL: 'https://yourusername.github.io/mindAge/', // TODO: 실제 배포 URL로 변경
+    PRODUCTION_URL: 'https://choihyukmin.github.io/', // GitHub Pages URL
 
     // 카카오톡 JavaScript Key
     KAKAO_KEY: '2b78d22d6aa77c493c1ce9ada6aee71b',
 
     // Open Graph 이미지 URL (절대 경로)
-    OG_IMAGE: '/og-image.png',
+    OG_IMAGE: 'https://choihyukmin.github.io/og-image.png',
 
     // 앱 정보
     APP_NAME: '마음의 나이 계산기',
