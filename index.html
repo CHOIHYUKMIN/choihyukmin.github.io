@@ -54,6 +54,7 @@
     <script>
         document.write(`<link rel="stylesheet" href="css/style.css?v=${CONFIG.VERSION}">`);
         document.write(`<link rel="stylesheet" href="css/animations.css?v=${CONFIG.VERSION}">`);
+        document.write(`<link rel="stylesheet" href="css/policy-modal.css?v=${CONFIG.VERSION}">`);
     </script>
 
     <!-- Kakao SDK -->
@@ -356,12 +357,45 @@
         </div>
     </section>
 
+    <!-- Policy Modals -->
+    <div id="privacy-modal" class="policy-modal" style="display:none;">
+        <div class="policy-modal-content">
+            <button class="policy-modal-close" onclick="closePolicyModal('privacy-modal')">&times;</button>
+            <div class="policy-modal-body" id="privacy-content">
+                <h1>개인정보처리방침</h1>
+                <p><strong>최종 수정일:</strong> 2024년 12월 13일</p>
+                <div class="lang-switch">
+                    <a href="#" onclick="loadPrivacy('ko'); return false;">한국어</a> |
+                    <a href="#" onclick="loadPrivacy('en'); return false;">English</a> |
+                    <a href="#" onclick="loadPrivacy('zh'); return false;">中文</a>
+                </div>
+                <div id="privacy-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="terms-modal" class="policy-modal" style="display:none;">
+        <div class="policy-modal-content">
+            <button class="policy-modal-close" onclick="closePolicyModal('terms-modal')">&times;</button>
+            <div class="policy-modal-body" id="terms-content">
+                <h1>이용약관</h1>
+                <p><strong>최종 수정일:</strong> 2024년 12월 13일</p>
+                <div class="lang-switch">
+                    <a href="#" onclick="loadTerms('ko'); return false;">한국어</a> |
+                    <a href="#" onclick="loadTerms('en'); return false;">English</a> |
+                    <a href="#" onclick="loadTerms('zh'); return false;">中文</a>
+                </div>
+                <div id="terms-text"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Policy Links Footer -->
     <div style="text-align: center; padding: 1rem; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
-        <a href="privacy.html"
+        <a href="#" onclick="openPolicyModal('privacy-modal'); return false;"
             style="color: var(--text-secondary); text-decoration: none; margin: 0 1rem; font-size: 0.9rem;">개인정보처리방침</a>
         <span style="color: var(--text-secondary);">|</span>
-        <a href="terms.html"
+        <a href="#" onclick="openPolicyModal('terms-modal'); return false;"
             style="color: var(--text-secondary); text-decoration: none; margin: 0 1rem; font-size: 0.9rem;">이용약관</a>
         <span style="color: var(--text-secondary);">|</span>
         <a href="mailto:hyukchm@gmail.com"
@@ -393,7 +427,8 @@
                 'js/ageDetection.js',
                 'js/share.js',
                 'js/i18n.js',
-                'js/snow.js'
+                'js/snow.js',
+                'js/policy-modal.js'
             ];
 
             scripts.forEach(src => {
