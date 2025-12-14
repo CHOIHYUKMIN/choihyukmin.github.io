@@ -45,13 +45,8 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&family=Poppins:wght@700;800&display=swap"
         rel="stylesheet">
 
-    <!-- Version Config (inline for early loading) -->
-    <script>
-        const CONFIG = {
-            VERSION: '2.3.2',
-            VERSION_NAME: 'Christmas Edition 🎄'
-        }; // 임시 정의, config.js에서 덮어씀
-    </script>
+    <!-- Load config.js first for VERSION management -->
+    <script src="js/config.js"></script>
 
     <!-- Stylesheets (버전 관리) -->
     <script>
@@ -417,8 +412,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
-    <!-- Config must load first -->
-    <script src="js/config.js"></script>
 
     <!-- Version-managed scripts -->
     <script>
