@@ -520,7 +520,19 @@ const app = {
                 };
                 const currentEmotion = emotionText[this.emotion][i18n.currentLang] || emotionText[this.emotion].ko;
 
-                // Update result text to include gender and emotion
+                // Build additional info (face shape and personal color)
+                let additionalInfo = '';
+
+                if (this.faceShape) {
+                    additionalInfo += `${this.faceShape.emoji} ${this.faceShape.name[i18n.currentLang]}`;
+                }
+
+                if (this.personalColor) {
+                    if (additionalInfo) additionalInfo += ' | ';
+                    additionalInfo += `${this.personalColor.emoji} ${this.personalColor.name[i18n.currentLang]}`;
+                }
+
+                // Update result text to include gender, emotion, face shape, and personal color
                 const resultValue = document.querySelector('.result-value');
                 resultValue.innerHTML = `
                     <span data-i18n="resultText">${i18n.t('resultText')}</span>
@@ -528,6 +540,7 @@ const app = {
                     <span data-i18n="resultTextAge">${i18n.t('resultTextAge')}</span>
                     <br>
                     <span style="font-size: 0.9em; opacity: 0.8;">${genderEmoji} ${genderText} (${genderConfidence}%) | ${emotionEmoji} ${currentEmotion}</span>
+                    ${additionalInfo ? `<br><span style="font-size: 0.85em; opacity: 0.75;">${additionalInfo}</span>` : ''}
                 `;
 
                 // Show next button with iOS Safari compatibility
