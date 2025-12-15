@@ -1150,10 +1150,11 @@ body {
 .progress-text {
     text-align: center;
     margin-top: 0.75rem;
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 1.2rem;
+    font-weight: 700;
     color: var(--accent-purple);
     font-family: 'Outfit', sans-serif;
+    text-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
 }
 
 .analyzing-text {
