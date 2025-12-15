@@ -1116,6 +1116,7 @@ body {
     width: 100%;
     max-width: 400px;
     margin: 1.5rem auto 0;
+    text-align: center;
 }
 
 .progress-bar {
@@ -1150,11 +1151,16 @@ body {
 .progress-text {
     text-align: center;
     margin-top: 0.75rem;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    color: var(--accent-purple);
+    color: #ffffff;
     font-family: 'Outfit', sans-serif;
-    text-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: inline-block;
+    min-width: 80px;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
 .analyzing-text {
