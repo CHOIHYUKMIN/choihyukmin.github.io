@@ -276,6 +276,22 @@ const app = {
         if (targetSection) {
             targetSection.classList.add('active');
             this.currentSection = sectionId;
+
+            // Reload AdSense ads for the new section
+            // Wait a bit for the section to be visible before loading ads
+            setTimeout(() => {
+                try {
+                    const ads = targetSection.querySelectorAll('.adsbygoogle');
+                    ads.forEach(ad => {
+                        // Only push if not already loaded
+                        if (!ad.dataset.adsbygoogleStatus) {
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        }
+                    });
+                } catch (e) {
+                    console.log('AdSense reload error:', e);
+                }
+            }, 100);
         }
     },
 
@@ -379,14 +395,31 @@ const app = {
                 });
             }
 
-            // Estimate age
+            // Estimate age, gender, emotion, and landmarks
             const result = await estimateAge(imageElement);
             this.physicalAge = result.age;
-            this.gender = result.gender;  // Store gender
+            this.gender = result.gender;
             this.genderProbability = result.genderProbability;
-            this.ageGroup = this.getAgeGroup(this.physicalAge);  // Calculate age group
+            this.ageGroup = this.getAgeGroup(this.physicalAge);
 
-            console.log(`Age: ${this.physicalAge}, Gender: ${this.gender}, Age Group: ${this.ageGroup}`);
+            // Store emotion data
+            this.emotion = result.dominantEmotion;
+            this.emotionConfidence = result.emotionConfidence;
+            this.expressions = result.expressions;
+
+            // Analyze face shape from landmarks
+            if (result.landmarks && typeof analyzeFaceShape === 'function') {
+                this.faceShape = analyzeFaceShape(result.landmarks);
+            }
+
+            // Analyze image colors
+            if (typeof analyzeImageColors === 'function') {
+                this.imageColors = await analyzeImageColors(imageElement);
+            }
+
+            console.log(`Age: ${this.physicalAge}, Gender: ${this.gender}, Emotion: ${this.emotion}, Age Group: ${this.ageGroup}`);
+            if (this.faceShape) console.log(`Face Shape: ${this.faceShape.name.ko}`);
+            if (this.imageColors) console.log(`Dominant Color: ${this.imageColors.dominant.hex}`);
 
             // Show result
             setTimeout(() => {
@@ -396,30 +429,52 @@ const app = {
                 // Display age
                 document.getElementById('physical-age').textContent = this.physicalAge;
 
-                // Display gender if confidence is high enough
+                // Get emotion emoji
+                const emotionEmojis = {
+                    happy: '😊',
+                    sad: '😢',
+                    angry: '😠',
+                    surprised: '😮',
+                    neutral: '😐',
+                    fearful: '😨',
+                    disgusted: '😖'
+                };
+                const emotionEmoji = emotionEmojis[this.emotion] || '😊';
+
+                // Display gender and emotion
                 const genderEmoji = result.gender === 'male' ? '👨' : '👩';
                 const genderText = result.gender === 'male' ?
                     (i18n.currentLang === 'ko' ? '남성' : i18n.currentLang === 'zh' ? '男性' : 'Male') :
                     (i18n.currentLang === 'ko' ? '여성' : i18n.currentLang === 'zh' ? '女性' : 'Female');
                 const genderConfidence = (result.genderProbability * 100).toFixed(0);
 
-                // Update result text to include gender
+                const emotionText = {
+                    happy: { ko: '행복', en: 'Happy', zh: '快乐' },
+                    sad: { ko: '슬픔', en: 'Sad', zh: '悲伤' },
+                    angry: { ko: '화남', en: 'Angry', zh: '生气' },
+                    surprised: { ko: '놀람', en: 'Surprised', zh: '惊讶' },
+                    neutral: { ko: '평온', en: 'Neutral', zh: '平静' },
+                    fearful: { ko: '두려움', en: 'Fearful', zh: '恐惧' },
+                    disgusted: { ko: '불쾌', en: 'Disgusted', zh: '厌恶' }
+                };
+                const currentEmotion = emotionText[this.emotion][i18n.currentLang] || emotionText[this.emotion].ko;
+
+                // Update result text to include gender and emotion
                 const resultValue = document.querySelector('.result-value');
                 resultValue.innerHTML = `
                     <span data-i18n="resultText">${i18n.t('resultText')}</span>
                     <strong id="physical-age">${this.physicalAge}</strong>
                     <span data-i18n="resultTextAge">${i18n.t('resultTextAge')}</span>
                     <br>
-                    <span style="font-size: 0.9em; opacity: 0.8;">${genderEmoji} ${genderText} (${genderConfidence}%)</span>
+                    <span style="font-size: 0.9em; opacity: 0.8;">${genderEmoji} ${genderText} (${genderConfidence}%) | ${emotionEmoji} ${currentEmotion}</span>
                 `;
 
                 // Show next button with iOS Safari compatibility
                 const btnNext = document.getElementById('btn-next');
                 btnNext.classList.remove('hidden');
-                btnNext.style.display = 'inline-block'; // Force display for iOS
-                // Force reflow to ensure iOS Safari applies the changes
+                btnNext.style.display = 'inline-block';
                 void btnNext.offsetHeight;
-            }, 1500); // Simulate processing time
+            }, 1500);
 
         } catch (error) {
             document.getElementById('analyzing-area').classList.add('hidden');
@@ -560,11 +615,75 @@ const app = {
         }
         */
 
+        // Display additional analysis results
+        this.displayAdditionalAnalysis();
+
         // Store message for sharing
         this.resultMessage = message;
 
         // Add confetti effect
         this.createConfetti();
+    },
+
+    // Display face shape, colors, and weather recommendations
+    displayAdditionalAnalysis() {
+        const archetypeContainer = document.getElementById('archetype-info');
+        if (!archetypeContainer) return;
+
+        let analysisHTML = '<div class="additional-analysis">';
+
+        // Face Shape
+        if (this.faceShape) {
+            const faceShapeTitle = {
+                ko: '얼굴형 분석',
+                en: 'Face Shape Analysis',
+                zh: '脸型分析'
+            }[i18n.currentLang] || '얼굴형 분석';
+
+            analysisHTML += `
+                <div class="analysis-card">
+                    <div class="analysis-title">${faceShapeTitle}</div>
+                    <div class="analysis-content">
+                        <div class="analysis-emoji">${this.faceShape.emoji}</div>
+                        <div class="analysis-name">${this.faceShape.name[i18n.currentLang]}</div>
+                        <div class="analysis-desc">${this.faceShape.description[i18n.currentLang]}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Image Colors
+        if (this.imageColors && this.imageColors.dominant) {
+            const colorTitle = {
+                ko: '당신의 대표 색상',
+                en: 'Your Signature Color',
+                zh: '你的代表色'
+            }[i18n.currentLang] || '당신의 대표 색상';
+
+            const colorName = this.imageColors.dominant.name[i18n.currentLang];
+
+            analysisHTML += `
+                <div class="analysis-card">
+                    <div class="analysis-title">${colorTitle}</div>
+                    <div class="analysis-content">
+                        <div class="color-palette">
+                            <div class="color-main" style="background-color: ${this.imageColors.dominant.hex}"></div>
+                            <div class="color-swatches">
+                                ${this.imageColors.palette.slice(0, 4).map(color =>
+                `<div class="color-swatch" style="background-color: ${color.hex}"></div>`
+            ).join('')}
+                            </div>
+                        </div>
+                        <div class="analysis-name">${colorName}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        analysisHTML += '</div>';
+
+        archetypeContainer.innerHTML = analysisHTML;
+        archetypeContainer.classList.remove('hidden');
     },
 
     // Create confetti animation
