@@ -234,6 +234,27 @@ const app = {
 
         // Show start section
         this.showSection('start');
+
+        // History Event Delegation
+        const historyList = document.getElementById('history-list');
+        if (historyList) {
+            historyList.addEventListener('click', (e) => {
+                // Delete button click
+                const deleteBtn = e.target.closest('.btn-delete-record');
+                if (deleteBtn) {
+                    e.stopPropagation(); // prevent expanding the item
+                    const id = deleteBtn.dataset.id;
+                    this.deleteHistoryRecord(id); // ID as string initially
+                    return;
+                }
+
+                // History item click (toggle expand)
+                const historyItem = e.target.closest('.history-item');
+                if (historyItem) {
+                    historyItem.classList.toggle('expanded');
+                }
+            });
+        }
     },
 
     // Show shared result from URL parameters
@@ -1319,7 +1340,7 @@ const app = {
             }
 
             html += `
-                <div class="history-item" onclick="this.classList.toggle('expanded')">
+                <div class="history-item" data-id="${item.id}">
                     <div class="history-header">
                         <div class="history-info">
                             <div class="history-date">${date} ${time}</div>
@@ -1333,8 +1354,8 @@ const app = {
                                 ${diffSign}${diff}
                             </div>
                             <div class="history-actions">
-                                <button class="btn-delete-record" onclick="event.stopPropagation(); app.deleteHistoryRecord(${item.id})">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <button class="btn-delete-record" data-action="delete" data-id="${item.id}">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="pointer-events: none;">
                                         <path d="M18 6L6 18M6 6l12 12"></path>
                                     </svg>
                                 </button>
@@ -1372,26 +1393,32 @@ const app = {
     },
 
     async deleteHistoryRecord(id) {
-        if (!confirm('삭제하시겠습니까?')) return;
+        if (!confirm(i18n.t('historyDeleteConfirm') || '삭제하시겠습니까?')) return;
+
+        // Ensure ID is a number
+        const numericId = Number(id);
 
         try {
-            await HistoryDB.deleteRecord(id);
+            await HistoryDB.deleteRecord(numericId);
             await this.renderHistory();
         } catch (error) {
             console.error('Failed to delete history record:', error);
         }
     },
+    console.error('Failed to delete history record:', error);
+}
+    },
 
     async clearHistory() {
-        if (!confirm(i18n.t('historyClearConfirm'))) return;
+    if (!confirm(i18n.t('historyClearConfirm'))) return;
 
-        try {
-            await HistoryDB.clearAll();
-            await this.renderHistory();
-        } catch (error) {
-            console.error('Failed to clear history:', error);
-        }
+    try {
+        await HistoryDB.clearAll();
+        await this.renderHistory();
+    } catch (error) {
+        console.error('Failed to clear history:', error);
     }
+}
 };
 
 // Expose app to global scope for HTML onclick handlers
