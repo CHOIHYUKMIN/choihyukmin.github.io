@@ -173,6 +173,8 @@ const HistoryDB = {
 };
 
 // Initialize on load
+window.HistoryDB = HistoryDB; // Ensure clear global access
+
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => HistoryDB.init());
 } else {

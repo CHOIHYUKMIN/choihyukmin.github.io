@@ -1385,7 +1385,7 @@ const app = {
                         </div>
                         <div class="history-right">
                             <span class="history-diff-badge ${diffClass}">${diffSign}${diff}</span>
-                            <button class="btn-delete-record" onclick="event.stopPropagation(); app.deleteHistoryRecord('${item.id}')">
+                            <button class="btn-delete-record" onclick="app.deleteHistoryRecord('${item.id}', event)">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="pointer-events: none;">
                                     <path d="M18 6L6 18M6 6l12 12"></path>
                                 </svg>
@@ -1513,7 +1513,12 @@ const app = {
         });
     },
 
-    async deleteHistoryRecord(id) {
+    async deleteHistoryRecord(id, event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
         if (!confirm(i18n.t('historyDeleteConfirm') || '삭제하시겠습니까?')) return;
 
         // Ensure ID is a number
