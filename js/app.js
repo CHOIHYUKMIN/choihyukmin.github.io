@@ -1273,6 +1273,7 @@ const app = {
 
             this.updateHistoryStats(stats);
             this.updateHistoryList(history);
+            this.updateHistoryChart(history);
         } catch (error) {
             console.error('Failed to render history:', error);
         }
@@ -1432,6 +1433,94 @@ const app = {
         });
 
         listEl.innerHTML = html;
+    },
+
+    updateHistoryChart(history) {
+        if (!window.Chart) return;
+
+        const canvas = document.getElementById('historyChart');
+        if (!canvas) return;
+
+        // timestamp 기준 오름차순 정렬 (과거 -> 현재) for chart
+        const chartData = [...history].sort((a, b) => a.timestamp - b.timestamp);
+
+        const labels = chartData.map(item => {
+            const date = new Date(item.timestamp);
+            return `${date.getMonth() + 1}.${date.getDate()}`;
+        });
+        const physicalAges = chartData.map(item => item.physicalAge);
+        const mentalAges = chartData.map(item => item.mentalAge);
+
+        if (this.historyChartInstance) {
+            this.historyChartInstance.destroy();
+        }
+
+        const ctx = canvas.getContext('2d');
+
+        this.historyChartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: i18n.t('historyMentalAge') || 'Mental Age',
+                        data: mentalAges,
+                        borderColor: '#a78bfa', // Purple
+                        backgroundColor: 'rgba(167, 139, 250, 0.2)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        pointBackgroundColor: '#a78bfa',
+                        pointRadius: 4,
+                        fill: true
+                    },
+                    {
+                        label: i18n.t('historyPhysicalAge') || 'Physical Age',
+                        data: physicalAges,
+                        borderColor: '#60a5fa', // Blue
+                        backgroundColor: 'rgba(96, 165, 250, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        pointBackgroundColor: '#60a5fa',
+                        pointRadius: 4,
+                        borderDash: [5, 5],
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#e2e8f0',
+                            font: { family: "'Outfit', sans-serif" }
+                        }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleColor: '#f8fafc',
+                        bodyColor: '#e2e8f0',
+                        borderColor: 'rgba(148, 163, 184, 0.2)',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94a3b8' },
+                        suggestedMin: 10,
+                        suggestedMax: 50
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
     },
 
     async deleteHistoryRecord(id) {
