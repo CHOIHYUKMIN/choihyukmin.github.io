@@ -1395,8 +1395,8 @@ const app = {
                         </div>
                         <div class="history-right">
                             <span class="history-diff-badge ${diffClass}">${diffSign}${diff}</span>
-                            <button class="btn-delete-record" data-id="${item.id}">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="pointer-events: none;">
+                            <button type="button" class="btn-delete-record" data-id="${item.id}">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="pointer-events: none;">
                                     <path d="M18 6L6 18M6 6l12 12"></path>
                                 </svg>
                             </button>
