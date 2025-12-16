@@ -1405,20 +1405,17 @@ const app = {
             console.error('Failed to delete history record:', error);
         }
     },
-    console.error('Failed to delete history record:', error);
-}
-    },
 
     async clearHistory() {
-    if (!confirm(i18n.t('historyClearConfirm'))) return;
+        if (!confirm(i18n.t('historyClearConfirm'))) return;
 
-    try {
-        await HistoryDB.clearAll();
-        await this.renderHistory();
-    } catch (error) {
-        console.error('Failed to clear history:', error);
+        try {
+            await HistoryDB.clearAll();
+            await this.renderHistory();
+        } catch (error) {
+            console.error('Failed to clear history:', error);
+        }
     }
-}
 };
 
 // Expose app to global scope for HTML onclick handlers
