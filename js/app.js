@@ -1514,7 +1514,7 @@ const app = {
         });
     },
 
-    async deleteHistoryRecord(id, event) {
+    deleteHistoryRecord(id, event) {
         if (event) {
             event.preventDefault();
             event.stopPropagation();
@@ -1526,23 +1526,30 @@ const app = {
         const i18nObj = window.i18n || i18n;
         const confirmMsg = (i18nObj && i18nObj.t && i18nObj.t('historyDeleteConfirm')) || '삭제하시겠습니까?';
 
-        if (!confirm(confirmMsg)) {
-            console.log('Delete cancelled by user');
-            return;
-        }
+        console.log('Confirm message:', confirmMsg);
 
-        // Ensure ID is a number
-        const numericId = Number(id);
+        // Use setTimeout to decouple generic confirm dialog from click event loop
+        // This solves issues where confirm acts weirdly or auto-closes on some browsers
+        setTimeout(async () => {
+            // Explicitly use window.confirm
+            if (!window.confirm(confirmMsg)) {
+                console.log('Delete cancelled by user');
+                return;
+            }
 
-        try {
-            // Use global HistoryDB if available
-            const db = window.HistoryDB || HistoryDB;
-            await db.deleteRecord(numericId);
-            await this.renderHistory();
-            console.log('Record deleted successfully');
-        } catch (error) {
-            console.error('Failed to delete history record:', error);
-        }
+            // Ensure ID is a number
+            const numericId = Number(id);
+
+            try {
+                // Use global HistoryDB if available
+                const db = window.HistoryDB || HistoryDB;
+                await db.deleteRecord(numericId);
+                await this.renderHistory();
+                console.log('Record deleted successfully');
+            } catch (error) {
+                console.error('Failed to delete history record:', error);
+            }
+        }, 50);
     },
 
     async clearHistory() {
