@@ -204,6 +204,15 @@ const app = {
             }
         });
 
+        // Set up event listeners for start button
+        const btnStart = document.querySelector('.btn-start');
+        if (btnStart) {
+            btnStart.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.goToUpload();
+            });
+        }
+
         // Set up event listeners for iOS compatibility
         const btnNext = document.getElementById('btn-next');
         if (btnNext) {
