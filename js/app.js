@@ -239,20 +239,11 @@ const app = {
         const historyList = document.getElementById('history-list');
         if (historyList) {
             historyList.addEventListener('click', (e) => {
-                // 1. Delete button click (High priority)
-                const deleteBtn = e.target.closest('.btn-delete-record');
-                if (deleteBtn) {
-                    e.preventDefault();
-                    e.stopPropagation(); // Crucial: Stop bubbling to history item
-                    const id = deleteBtn.getAttribute('data-id');
-                    this.deleteHistoryRecord(id);
-                    return;
-                }
-
-                // 2. History item click (toggle expand)
+                // History item click (toggle expand)
+                // Note: Delete button has inline onclick with stopPropagation()
                 const historyItem = e.target.closest('.history-item');
-                // Only toggle if we didn't click a button (double safety)
-                if (historyItem && !e.target.closest('button')) {
+                // Ensure we didn't click the delete button (safety check)
+                if (historyItem && !e.target.closest('.btn-delete-record')) {
                     historyItem.classList.toggle('expanded');
                 }
             });
@@ -1395,7 +1386,7 @@ const app = {
                         </div>
                         <div class="history-right">
                             <span class="history-diff-badge ${diffClass}">${diffSign}${diff}</span>
-                            <button type="button" class="btn-delete-record" data-id="${item.id}">
+                            <button type="button" class="btn-delete-record" onclick="event.stopPropagation(); window.onDeleteHistory('${item.id}')">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="pointer-events: none;">
                                     <path d="M18 6L6 18M6 6l12 12"></path>
                                 </svg>
@@ -1554,8 +1545,16 @@ const app = {
     }
 };
 
-// Expose app to global scope for HTML onclick handlers
+// Expose app and delete handler to global scope
 window.app = app;
+window.onDeleteHistory = (id) => {
+    console.log('Delete button clicked for ID:', id);
+    if (app && app.deleteHistoryRecord) {
+        app.deleteHistoryRecord(id);
+    } else {
+        console.error('App instance not found');
+    }
+};
 
 // Initialize when DOM is ready
 if (document.readyState === 'loading') {
