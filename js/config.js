@@ -74,6 +74,18 @@ const CONFIG = {
 
     // 현재 시즌 자동 감지
     getCurrentSeason() {
+        // 🎨 로컬 개발 모드: URL 파라미터로 테마 선택 가능
+        // 사용법: http://localhost:8000/?theme=newyear
+        // 가능한 테마: christmas, newyear, valentine, spring, summer, autumn
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            const urlParams = new URLSearchParams(window.location.search);
+            const themeParam = urlParams.get('theme');
+            if (themeParam && this.SEASONAL_THEMES[themeParam]) {
+                console.log(`🎨 Developer Mode: Using theme '${themeParam}'`);
+                return this.SEASONAL_THEMES[themeParam];
+            }
+        }
+
         const now = new Date();
         const month = now.getMonth() + 1; // 0-11 → 1-12
         const day = now.getDate();
