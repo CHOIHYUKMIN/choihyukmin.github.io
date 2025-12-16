@@ -19,7 +19,7 @@ const CONFIG = {
 
     // 버전 관리 (한 곳에서 관리)
     VERSION: '4.0.0',
-    VERSION_NAME: 'Multilingual Age System 🌍',
+    VERSION_NAME: 'Christmas edition 🎄',
 };
 
 // Get the current URL based on environment

@@ -926,13 +926,16 @@ const app = {
         // 연령·성별에 맞는 질문 세트 가져오기
         const questionSet = this.getQuestionSet();
 
-        // 질문 ID 배열 생성 (10개)
-        this.currentScenarioQuestions = Object.keys(questionSet);
+        if (!questionSet || questionSet.length === 0) {
+            console.error('No questions available for this scenario');
+            return;
+        }
 
-        // 전체 질문 객체 저장 (나중에 참조용)
+        // 질문 배열 저장 (새 시스템은 배열 반환)
         this.currentQuestionSet = questionSet;
+        this.currentScenarioQuestions = questionSet;
 
-        console.log(`Selected scenario: ${scenarioId}, Age group: ${this.ageGroup}, Gender: ${this.gender}, Questions: ${this.currentScenarioQuestions.length}`);
+        console.log(`Selected scenario: ${scenarioId}, Age group: ${this.ageGroup}, Questions: ${this.currentScenarioQuestions.length}`);
 
         // 질문 인덱스 초기화
         this.currentQuestionIndex = 0;
@@ -955,23 +958,23 @@ const app = {
 
     // 시나리오 질문 렌더링
     renderScenarioQuestion() {
-        if (!this.currentQuestionSet) {
+        if (!this.currentQuestionSet || this.currentQuestionSet.length === 0) {
             console.error('Question set not loaded');
             return;
         }
 
-        const questionId = this.currentScenarioQuestions[this.currentQuestionIndex];
-        const question = this.currentQuestionSet[questionId];
+        // 배열에서 직접 질문 가져오기
+        const question = this.currentQuestionSet[this.currentQuestionIndex];
 
         if (!question) {
-            console.error('Question not found:', questionId);
+            console.error('Question not found at index:', this.currentQuestionIndex);
             return;
         }
 
         // 진행률 업데이트
-        const progress = ((this.currentQuestionIndex + 1) / this.currentScenarioQuestions.length) * 100;
+        const progress = ((this.currentQuestionIndex + 1) / this.currentQuestionSet.length) * 100;
         document.getElementById('progress-fill').style.width = `${progress}%`;
-        document.getElementById('progress-text').textContent = `${this.currentQuestionIndex + 1} / ${this.currentScenarioQuestions.length}`;
+        document.getElementById('progress-text').textContent = `${this.currentQuestionIndex + 1} / ${this.currentQuestionSet.length}`;
 
         // 질문 텍스트 표시
         const questionText = question.text[i18n.currentLang] || question.text.ko;
@@ -995,20 +998,21 @@ const app = {
         if (optionsContainer && question.options) {
             optionsContainer.innerHTML = '';
 
-            for (const [value, option] of Object.entries(question.options)) {
+            // 새 시스템은 options가 배열
+            question.options.forEach((option, index) => {
                 const optionLabel = option.label[i18n.currentLang] || option.label.ko;
                 const optionBtn = document.createElement('button');
                 optionBtn.className = 'option-btn';
                 optionBtn.textContent = optionLabel;
-                optionBtn.onclick = () => this.selectScenarioAnswer(questionId, parseInt(value));
+                optionBtn.onclick = () => this.selectScenarioAnswer(question.id, option.score);
 
                 // 이미 선택한 답변이 있으면 표시
-                if (this.scenarioAnswers[this.currentScenario.id]?.[questionId] === parseInt(value)) {
+                if (this.scenarioAnswers[this.currentScenario.id]?.[question.id] === option.score) {
                     optionBtn.classList.add('selected');
                 }
 
                 optionsContainer.appendChild(optionBtn);
-            }
+            });
         }
 
         // 뒤로가기 버튼 업데이트
@@ -1026,7 +1030,7 @@ const app = {
         event.target.classList.add('selected');
 
         // 바로 다음 질문으로
-        if (this.currentQuestionIndex < this.currentScenarioQuestions.length - 1) {
+        if (this.currentQuestionIndex < this.currentQuestionSet.length - 1) {
             this.currentQuestionIndex++;
             this.renderScenarioQuestion();
             this.updateBackButton();
