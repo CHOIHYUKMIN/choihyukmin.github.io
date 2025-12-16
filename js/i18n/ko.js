@@ -150,7 +150,17 @@ const translations_ko = {
     historyDelete: "삭제",
     historyClearAll: "전체 삭제",
     historyClearConfirm: "모든 기록을 삭제하시겠습니까?",
+    historyDeleteConfirm: "삭제하시겠습니까?",
     historyClose: "닫기",
+
+    // Emotions
+    emotion_happy: "행복 😊",
+    emotion_sad: "슬픔 😢",
+    emotion_angry: "화남 😠",
+    emotion_surprised: "놀람 😮",
+    emotion_neutral: "무표정 😐",
+    emotion_fearful: "두려움 😨",
+    emotion_disgusted: "혐오 😖",
 
     // Footer
     privacyPolicy: "개인정보처리방침",

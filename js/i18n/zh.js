@@ -132,6 +132,31 @@ const translations_zh = {
     shareDesc: "📸 实际年龄: {pa}岁\n🧠 心理年龄: {ma}岁",
     // shareTitleArchetype: "我的角色类型: {name} ✨",
 
+    // History
+    historyTitle: "心理年龄记录",
+    historyEmpty: "暂无记录。\n请开始您的第一次测试！",
+    historyStats: "统计",
+    historyTotalTests: "总测试",
+    historyAvgMentalAge: "平均心理年龄",
+    historyAvgDiff: "平均差异",
+    historyYoungest: "最年轻心态",
+    historyPhysicalAge: "实际",
+    historyMentalAge: "心理",
+    historyRecords: "记录",
+    historyClearAll: "全部删除",
+    historyClose: "关闭",
+    historyClearConfirm: "确定要删除所有记录吗？",
+    historyDeleteConfirm: "确定要删除这条记录吗？",
+
+    // Emotions
+    emotion_happy: "快乐 😊",
+    emotion_sad: "悲伤 😢",
+    emotion_angry: "愤怒 😠",
+    emotion_surprised: "惊讶 😮",
+    emotion_neutral: "平淡 😐",
+    emotion_fearful: "恐惧 😨",
+    emotion_disgusted: "厌恶 😖",
+
     // Footer
     privacyPolicy: "隐私政策",
     termsOfService: "服务条款",

@@ -132,6 +132,31 @@ const translations_en = {
     shareDesc: "📸 Physical Age: {pa}\n🧠 Mental Age: {ma}",
     // shareTitleArchetype: "My Character Type: {name} ✨",
 
+    // History
+    historyTitle: "Mental Age History",
+    historyEmpty: "No history yet.\nStart your first test!",
+    historyStats: "Statistics",
+    historyTotalTests: "Total Tests",
+    historyAvgMentalAge: "Avg Mental Age",
+    historyAvgDiff: "Avg Difference",
+    historyYoungest: "Youngest Mind",
+    historyPhysicalAge: "Physical",
+    historyMentalAge: "Mental",
+    historyRecords: "Records",
+    historyClearAll: "Clear All",
+    historyClose: "Close",
+    historyClearConfirm: "Are you sure you want to clear all history?",
+    historyDeleteConfirm: "Are you sure you want to delete this record?",
+
+    // Emotions
+    emotion_happy: "Happy 😊",
+    emotion_sad: "Sad 😢",
+    emotion_angry: "Angry 😠",
+    emotion_surprised: "Surprised 😮",
+    emotion_neutral: "Neutral 😐",
+    emotion_fearful: "Fearful 😨",
+    emotion_disgusted: "Disgusted 😖",
+
     // Footer
     privacyPolicy: "Privacy Policy",
     termsOfService: "Terms of Service",
