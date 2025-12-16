@@ -3,7 +3,6 @@ import { SCENARIOS, SCENARIO_MAP, getAvailableScenarios } from './scenarios.js';
 import {
     WEIGHTS,
     ALL_QUESTIONS,
-    SCENARIO_MAP,
     getQuestions,
     getAgeGroup
 } from './mentalAgeQuestions_final.js';
