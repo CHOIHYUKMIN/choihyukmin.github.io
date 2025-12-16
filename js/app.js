@@ -1,18 +1,12 @@
 // Import scenario and question data
-import { SCENARIOS } from './scenarios.js';
+import { SCENARIOS, SCENARIO_MAP, getAvailableScenarios } from './scenarios.js';
 import {
     WEIGHTS,
-    QUESTIONS_TEEN_MALE,
-    QUESTIONS_TEEN_FEMALE,
-    QUESTIONS_20_MALE,
-    QUESTIONS_20_FEMALE,
-    QUESTIONS_30_MALE,
-    QUESTIONS_30_FEMALE,
-    QUESTIONS_40_MALE,
-    QUESTIONS_40_FEMALE,
-    QUESTIONS_50_MALE,
-    QUESTIONS_50_FEMALE
-} from './mentalAgeQuestions_complete.js';
+    ALL_QUESTIONS,
+    SCENARIO_MAP,
+    getQuestions,
+    getAgeGroup
+} from './mentalAgeQuestions_final.js';
 
 // Main Application Logic
 const app = {
@@ -890,45 +884,21 @@ const app = {
     // 연령·성별에 맞는 질문 세트 선택
     getQuestionSet() {
         const ageGroup = this.ageGroup;  // teen, twenties, thirties, forties, fifties, sixties
-        const gender = this.gender;      // 'male' | 'female'
+        const scenarioId = this.currentScenario?.id || 'daily';  // 현재 선택된 시나리오
 
-        // 연령·성별 매핑
-        const questionMap = {
-            teen: {
-                male: QUESTIONS_TEEN_MALE,
-                female: QUESTIONS_TEEN_FEMALE
-            },
-            twenties: {
-                male: QUESTIONS_20_MALE,
-                female: QUESTIONS_20_FEMALE
-            },
-            thirties: {
-                male: QUESTIONS_30_MALE,
-                female: QUESTIONS_30_FEMALE
-            },
-            forties: {
-                male: QUESTIONS_40_MALE,
-                female: QUESTIONS_40_FEMALE
-            },
-            fifties: {
-                male: QUESTIONS_50_MALE,
-                female: QUESTIONS_50_FEMALE
-            },
-            sixties: {
-                // 50대 질문 재사용
-                male: QUESTIONS_50_MALE,
-                female: QUESTIONS_50_FEMALE
-            }
-        };
+        // 연령대를 대문자로 변환 (TEEN, TWENTIES, etc.)
+        const ageGroupUpper = ageGroup.toUpperCase();
 
-        const questionSet = questionMap[ageGroup]?.[gender];
-        if (!questionSet) {
-            console.error('No question set for', ageGroup, gender);
-            // 기본값으로 20대 질문 사용
-            return gender === 'male' ? QUESTIONS_20_MALE : QUESTIONS_20_FEMALE;
+        // 새로운 질문 시스템에서 질문 가져오기
+        const questions = getQuestions(ageGroupUpper, scenarioId);
+
+        if (!questions || questions.length === 0) {
+            console.error('No questions found for', ageGroupUpper, scenarioId);
+            // 기본값으로 일상생활 질문 사용
+            return getQuestions(ageGroupUpper, 'daily') || [];
         }
 
-        return questionSet;
+        return questions;
     },
 
     // 시나리오 선택

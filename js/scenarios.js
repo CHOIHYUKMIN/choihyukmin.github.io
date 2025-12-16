@@ -9,52 +9,83 @@ export const SCENARIOS = {
             ko: '평소 생활 습관과 일상적인 선택을 통해 마음의 나이를 분석합니다',
             en: 'Analyze your mind age through daily habits and routine choices',
             zh: '通过日常习惯和日常选择分析您的心理年龄'
-        },
-        // 연령대별 질문 ID 배열 (각 10개)
-        questionsByAge: {
-            teen: ['d_t1', 'd_t2', 'd_t3', 'd_t4', 'd_t5', 'd_t6', 'd_t7', 'd_t8', 'd_t9', 'd_t10'],
-            twenties: ['d_20_1', 'd_20_2', 'd_20_3', 'd_20_4', 'd_20_5', 'd_20_6', 'd_20_7', 'd_20_8', 'd_20_9', 'd_20_10'],
-            thirties: ['d_30_1', 'd_30_2', 'd_30_3', 'd_30_4', 'd_30_5', 'd_30_6', 'd_30_7', 'd_30_8', 'd_30_9', 'd_30_10'],
-            forties: ['d_40_1', 'd_40_2', 'd_40_3', 'd_40_4', 'd_40_5', 'd_40_6', 'd_40_7', 'd_40_8', 'd_40_9', 'd_40_10'],
-            fifties: ['d_50_1', 'd_50_2', 'd_50_3', 'd_50_4', 'd_50_5', 'd_50_6', 'd_50_7', 'd_50_8', 'd_50_9', 'd_50_10']
+        }
+    },
+
+    school: {
+        id: 'school',
+        name: { ko: '학교생활', en: 'School Life', zh: '学校生活' },
+        icon: '🎓',
+        weight: 1.0,
+        description: {
+            ko: '학교에서의 태도와 학습 스타일로 마음의 나이를 분석합니다',
+            en: 'Analyze your mind age through school attitude and learning style',
+            zh: '通过学校态度和学习方式分析您的心理年龄'
         }
     },
 
     work: {
         id: 'work',
-        name: { ko: '회사·직장 생활', en: 'Work Life', zh: '职场生活' },
+        name: { ko: '직장생활', en: 'Work Life', zh: '职场生活' },
         icon: '💼',
         weight: 1.2,
         description: {
             ko: '직장에서의 태도와 업무 스타일로 마음의 나이를 분석합니다',
             en: 'Analyze your mind age through work attitude and style',
             zh: '通过工作态度和工作方式分析您的心理年龄'
-        },
-        questionsByAge: {
-            teen: ['w_t1', 'w_t2', 'w_t3', 'w_t4', 'w_t5', 'w_t6', 'w_t7', 'w_t8', 'w_t9', 'w_t10'],
-            twenties: ['w_20_1', 'w_20_2', 'w_20_3', 'w_20_4', 'w_20_5', 'w_20_6', 'w_20_7', 'w_20_8', 'w_20_9', 'w_20_10'],
-            thirties: ['w_30_1', 'w_30_2', 'w_30_3', 'w_30_4', 'w_30_5', 'w_30_6', 'w_30_7', 'w_30_8', 'w_30_9', 'w_30_10'],
-            forties: ['w_40_1', 'w_40_2', 'w_40_3', 'w_40_4', 'w_40_5', 'w_40_6', 'w_40_7', 'w_40_8', 'w_40_9', 'w_40_10'],
-            fifties: ['w_50_1', 'w_50_2', 'w_50_3', 'w_50_4', 'w_50_5', 'w_50_6', 'w_50_7', 'w_50_8', 'w_50_9', 'w_50_10']
         }
     },
 
-    entertainment: {
-        id: 'entertainment',
-        name: { ko: '연예·엔터테인먼트', en: 'Entertainment', zh: '娱乐生活' },
-        icon: '🎬',
-        weight: 0.9,
+    romance: {
+        id: 'romance',
+        name: { ko: '연애생활', en: 'Romance Life', zh: '恋爱生活' },
+        icon: '💕',
+        weight: 1.1,
         description: {
-            ko: '여가 활동과 취미 생활을 통해 마음의 나이를 분석합니다',
-            en: 'Analyze your mind age through leisure and entertainment preferences',
-            zh: '通过休闲活动和娱乐偏好分析您的心理年龄'
-        },
-        questionsByAge: {
-            teen: ['e_t1', 'e_t2', 'e_t3', 'e_t4', 'e_t5', 'e_t6', 'e_t7', 'e_t8', 'e_t9', 'e_t10'],
-            twenties: ['e_20_1', 'e_20_2', 'e_20_3', 'e_20_4', 'e_20_5', 'e_20_6', 'e_20_7', 'e_20_8', 'e_20_9', 'e_20_10'],
-            thirties: ['e_30_1', 'e_30_2', 'e_30_3', 'e_30_4', 'e_30_5', 'e_30_6', 'e_30_7', 'e_30_8', 'e_30_9', 'e_30_10'],
-            forties: ['e_40_1', 'e_40_2', 'e_40_3', 'e_40_4', 'e_40_5', 'e_40_6', 'e_40_7', 'e_40_8', 'e_40_9', 'e_40_10'],
-            fifties: ['e_50_1', 'e_50_2', 'e_50_3', 'e_50_4', 'e_50_5', 'e_50_6', 'e_50_7', 'e_50_8', 'e_50_9', 'e_50_10']
+            ko: '연애와 관계에 대한 태도로 마음의 나이를 분석합니다',
+            en: 'Analyze your mind age through romance and relationship attitudes',
+            zh: '通过恋爱和关系态度分析您的心理年龄'
+        }
+    },
+
+    social: {
+        id: 'social',
+        name: { ko: '사회생활', en: 'Social Life', zh: '社会生活' },
+        icon: '👥',
+        weight: 1.0,
+        description: {
+            ko: '사회 활동과 대인 관계로 마음의 나이를 분석합니다',
+            en: 'Analyze your mind age through social activities and relationships',
+            zh: '通过社会活动和人际关系分析您的心理年龄'
+        }
+    },
+
+    family: {
+        id: 'family',
+        name: { ko: '가족생활', en: 'Family Life', zh: '家庭生活' },
+        icon: '👨‍👩‍👧‍👦',
+        weight: 1.1,
+        description: {
+            ko: '가족 관계와 부부 생활로 마음의 나이를 분석합니다',
+            en: 'Analyze your mind age through family and couple relationships',
+            zh: '通过家庭和夫妻关系分析您的心理年龄'
         }
     }
 };
+
+// 연령대별 사용 가능한 시나리오 매핑
+export const SCENARIO_MAP = {
+    TEEN: ['daily', 'school', 'romance'],
+    TWENTIES: ['daily', 'work', 'romance'],
+    THIRTIES: ['daily', 'work', 'romance'],
+    FORTIES: ['daily', 'work', 'romance'],
+    FIFTIES: ['daily', 'work', 'romance'],
+    SIXTIES: ['daily', 'social', 'family'],
+    SEVENTIES: ['daily', 'social', 'family']
+};
+
+// 연령대별 사용 가능한 시나리오 가져오기
+export function getAvailableScenarios(ageGroup) {
+    const scenarios = SCENARIO_MAP[ageGroup] || ['daily'];
+    return scenarios.map(id => SCENARIOS[id]).filter(Boolean);
+}
