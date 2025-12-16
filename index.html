@@ -478,18 +478,19 @@
 
     <!-- Custom Confirm Modal -->
     <div id="confirm-modal" class="policy-modal"
-        style="display:none; z-index: 9999 !important; background: rgba(0,0,0,0.8);">
-        <div class="policy-modal-content" style="max-width: 320px; text-align: center; padding: 24px; margin: auto;">
+        style="display:none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2147483647 !important; background: rgba(0,0,0,0.85); align-items: center; justify-content: center;">
+        <div class="policy-modal-content"
+            style="max-width: 320px; width: 90%; text-align: center; padding: 24px; margin: auto; position: relative; z-index: 2147483648; background: #1e1b4b; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
             <p id="confirm-message"
-                style="margin: 0 0 24px 0; font-size: 1.1rem; font-weight: 500; color: var(--text-primary); white-space: pre-wrap;">
+                style="margin: 0 0 24px 0; font-size: 1.1rem; font-weight: 500; color: #f8fafc; white-space: pre-wrap;">
                 Are you sure?</p>
             <div style="display: flex; gap: 12px; justify-content: center;">
                 <button type="button" onclick="window.resolveConfirm(false)"
-                    style="padding: 10px 24px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: var(--text-secondary); cursor: pointer; font-family: inherit;">
+                    style="padding: 12px 24px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #cbd5e1; cursor: pointer; font-family: inherit; font-size: 1rem;">
                     취소
                 </button>
                 <button type="button" onclick="window.resolveConfirm(true)"
-                    style="padding: 10px 24px; border-radius: 12px; border: none; background: #ff6b6b; color: white; cursor: pointer; font-weight: 600; font-family: inherit;">
+                    style="padding: 12px 24px; border-radius: 12px; border: none; background: #ef4444; color: white; cursor: pointer; font-weight: 600; font-family: inherit; font-size: 1rem; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">
                     삭제
                 </button>
             </div>
