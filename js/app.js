@@ -1084,16 +1084,23 @@ const app = {
         const scenarioId = this.currentScenario.id;
         const answers = this.scenarioAnswers[scenarioId] || {};
 
+        console.log('Calculating mind age with answers:', answers);
+        console.log('Question set:', this.currentQuestionSet);
+
         // 각 답변의 점수를 카테고리별로 분류
-        for (const [qid, answer] of Object.entries(answers)) {
-            const question = this.currentQuestionSet[qid];
-            if (question && question.options && question.options[answer]) {
-                const score = question.options[answer].score || 0;
+        for (const [qid, answerScore] of Object.entries(answers)) {
+            // 배열에서 id로 질문 찾기
+            const question = this.currentQuestionSet.find(q => q.id === qid);
+
+            if (question) {
                 const category = question.category;
 
                 if (category && categoryScores[category]) {
-                    categoryScores[category].push(score);
+                    categoryScores[category].push(answerScore);
+                    console.log(`Added score ${answerScore} to category ${category}`);
                 }
+            } else {
+                console.warn(`Question not found for id: ${qid}`);
             }
         }
 
