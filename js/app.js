@@ -1514,7 +1514,7 @@ const app = {
         });
     },
 
-    deleteHistoryRecord(id, event) {
+    async deleteHistoryRecord(id, event) {
         if (event) {
             event.preventDefault();
             event.stopPropagation();
@@ -1526,30 +1526,28 @@ const app = {
         const i18nObj = window.i18n || i18n;
         const confirmMsg = (i18nObj && i18nObj.t && i18nObj.t('historyDeleteConfirm')) || '삭제하시겠습니까?';
 
-        console.log('Confirm message:', confirmMsg);
+        console.log('Opening confirm modal:', confirmMsg);
 
-        // Use setTimeout to decouple generic confirm dialog from click event loop
-        // This solves issues where confirm acts weirdly or auto-closes on some browsers
-        setTimeout(async () => {
-            // Explicitly use window.confirm
-            if (!window.confirm(confirmMsg)) {
-                console.log('Delete cancelled by user');
-                return;
-            }
+        // Use custom confirmation modal
+        const confirmed = await window.showConfirmModal(confirmMsg);
 
-            // Ensure ID is a number
-            const numericId = Number(id);
+        if (!confirmed) {
+            console.log('Delete cancelled by user');
+            return;
+        }
 
-            try {
-                // Use global HistoryDB if available
-                const db = window.HistoryDB || HistoryDB;
-                await db.deleteRecord(numericId);
-                await this.renderHistory();
-                console.log('Record deleted successfully');
-            } catch (error) {
-                console.error('Failed to delete history record:', error);
-            }
-        }, 50);
+        // Ensure ID is a number
+        const numericId = Number(id);
+
+        try {
+            // Use global HistoryDB if available
+            const db = window.HistoryDB || HistoryDB;
+            await db.deleteRecord(numericId);
+            await this.renderHistory();
+            console.log('Record deleted successfully');
+        } catch (error) {
+            console.error('Failed to delete history record:', error);
+        }
     },
 
     async clearHistory() {
@@ -1561,6 +1559,38 @@ const app = {
         } catch (error) {
             console.error('Failed to clear history:', error);
         }
+    }
+};
+
+// Custom Confirm Modal Logic
+window.confirmCallback = null;
+
+window.showConfirmModal = (message) => {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('confirm-modal');
+        const msgEl = document.getElementById('confirm-message');
+
+        if (msgEl) msgEl.textContent = message;
+
+        if (modal) {
+            window.confirmCallback = resolve;
+            modal.style.display = 'flex';
+            modal.style.alignItems = 'center';     // Ensure centering
+            modal.style.justifyContent = 'center'; // Ensure centering
+        } else {
+            // Fallback to native confirm if modal fails
+            resolve(confirm(message));
+        }
+    });
+};
+
+window.resolveConfirm = (result) => {
+    const modal = document.getElementById('confirm-modal');
+    if (modal) modal.style.display = 'none';
+
+    if (window.confirmCallback) {
+        window.confirmCallback(result);
+        window.confirmCallback = null;
     }
 };
 
