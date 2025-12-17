@@ -1,0 +1,16 @@
+# robots.txt for Mental Age Test
+# https://choihyukmin.github.io/mindAge/
+
+User-agent: *
+Allow: /
+
+# Disallow debug and test files
+Disallow: /debug.html
+Disallow: /test-modules.html
+Disallow: /*.py$
+
+# Sitemap location
+Sitemap: https://choihyukmin.github.io/mindAge/sitemap.xml
+
+# Crawl delay (optional, helps prevent overloading)
+Crawl-delay: 1
