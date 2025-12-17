@@ -1,0 +1,33 @@
+{
+    "name": "정신연령 테스트 - Mental Age Calculator",
+    "short_name": "정신연령",
+    "description": "AI로 실물 나이를 추측하고 심리 질문으로 마음의 나이를 계산해보세요!",
+    "start_url": "/mindAge/",
+    "scope": "/mindAge/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0a1f",
+    "theme_color": "#667eea",
+    "lang": "ko",
+    "dir": "ltr",
+    "icons": [
+        {
+            "src": "icon-128.png",
+            "sizes": "128x128",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "favicon.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "lifestyle",
+        "entertainment",
+        "personalization"
+    ],
+    "screenshots": []
+}

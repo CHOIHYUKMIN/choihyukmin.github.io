@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJPD5BV53J"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-EJPD5BV53J');
+    </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="당신의 마음은 몇 살인가요? AI로 실물 나이를 추측하고 심리 질문으로 마음의 나이를 계산해보세요!">
+    <meta name="keywords" content="마음의 나이, 심리테스트, 나이 계산기, 재미있는 테스트">
+    <meta name="google-adsense-account" content="ca-pub-7456046576951897">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="icon-128.png">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="마음의 나이 계산기">
+    <meta property="og:description" content="당신의 실물 나이와 마음의 나이를 비교해보세요!">
+    <meta property="og:image" content="https://choihyukmin.github.io/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="마음의 나이 계산기">
+    <meta property="twitter:description" content="당신의 실물 나이와 마음의 나이를 비교해보세요!">
+    <meta property="twitter:image" content="https://choihyukmin.github.io/og-image.png">
+
+    <title>마음의 나이 계산기 | Mental Age Calculator</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&family=Poppins:wght@700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Load config.js first for VERSION management -->
+    <script src="js/config.js"></script>
+
+    <!-- Stylesheets (버전 관리) -->
+    <script>
+        document.write(`<link rel="stylesheet" href="css/style.css?v=${CONFIG.VERSION}">`);
+        document.write(`<link rel="stylesheet" href="css/animations.css?v=${CONFIG.VERSION}">`);
+        document.write(`<link rel="stylesheet" href="css/policy-modal.css?v=${CONFIG.VERSION}">`);
+        document.write(`<link rel="stylesheet" href="css/history.css?v=${CONFIG.VERSION}">`);
+    </script>
+
+    <!-- Kakao SDK -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7456046576951897"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <select id="language-select" class="lang-select" onchange="i18n.setLanguage(this.value)">
+            <option value="ko" selected>🇰🇷 한국어</option>
+            <option value="en">🇺🇸 English</option>
+            <option value="zh">🇨🇳 中文</option>
+        </select>
+    </div>
+
+
+    <!-- Shared Result Section -->
+    <section id="shared-section" class="section">
+        <div class="container">
+            <div class="shared-content">
+                <h2 class="shared-title">친구의 테스트 결과 📊</h2>
+
+                <div class="shared-card">
+                    <div class="age-comparison">
+                        <div class="age-circle">
+                            <div class="circle-inner">
+                                <span class="circle-label" data-i18n="physicalAgeLabel">실물 나이</span>
+                                <span class="circle-value" id="shared-physical-age">--</span>
+                                <span class="circle-unit" data-i18n="ageUnit">세</span>
+                            </div>
+                        </div>
+
+                        <div class="vs-badge">VS</div>
+
+                        <div class="age-circle">
+                            <div class="circle-inner">
+                                <span class="circle-label" data-i18n="mentalAgeLabel">마음의 나이</span>
+                                <span class="circle-value" id="shared-mental-age">--</span>
+                                <span class="circle-unit" data-i18n="ageUnit">세</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="age-difference">
+                        <span class="diff-value" id="shared-diff-value">+0</span>
+                    </div>
+
+                    <div class="shared-message">
+                        <p class="message-text" id="shared-message-text">친구가 마음의 나이 테스트를 완료했어요!</p>
+                    </div>
+
+                    <!-- Shared Archetype Info -->
+                    <div id="shared-archetype-info" class="archetype-container hidden">
+                        <!-- Archetype will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <button class="btn-primary btn-start" onclick="app.goToStart()">
+                    <span data-i18n="btnMyTest">나도 테스트하기 🎈</span>
+                    <span class="btn-glow"></span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Start Section -->
+    <section id="start-section" class="section active">
+        <div class="container">
+            <div class="start-content">
+                <div class="decorative-shapes">
+                    <div class="shape shape-1"></div>
+                    <div class="shape shape-2"></div>
+                    <div class="shape shape-3"></div>
+                </div>
+
+                <h1 class="main-title" data-i18n="title">
+                    당신의 마음은<br>몇 살인가요?
+                </h1>
+
+                <p class="subtitle" data-i18n="subtitle">
+                    AI가 당신의 얼굴로 실물 나이를 추측하고,<br>
+                    10가지 질문으로 마음의 나이를 알려드려요
+                </p>
+
+                <button class="btn-primary btn-start" onclick="window.app && window.app.goToUpload()">
+                    <span data-i18n="btnStart">테스트 시작하기</span>
+                    <span class="btn-glow"></span>
+                </button>
+
+                <button class="btn-view-history" onclick="window.app && window.app.openHistory()"
+                    style="margin-top: 1rem;">
+                    <span data-i18n="btnHistory">📊 내 기록 보기</span>
+                </button>
+
+                <!-- AdSense Ad -->
+                <div class="ad-container" style="margin-top: 3rem;">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7456046576951897"
+                        data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section id="upload-section" class="section">
+        <div class="container">
+            <button class="btn-back" onclick="app.goToStart()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+            </button>
+
+            <div class="upload-content">
+                <h2 class="section-title" data-i18n="uploadTitle">사진 업로드</h2>
+                <p class="section-description" data-i18n="uploadDesc">정면 얼굴이 잘 보이는 사진을 올려주세요</p>
+
+                <!-- AdSense Ad -->
+                <div class="ad-container" style="margin-bottom: 1.5rem;">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7456046576951897"
+                        data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+
+                <div class="upload-card" id="upload-card">
+                    <div class="upload-area" id="upload-area">
+                        <div class="upload-icon">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path
+                                    d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                                <circle cx="12" cy="13" r="4" />
+                            </svg>
+                        </div>
+                        <p class="upload-text" data-i18n="uploadText">클릭하거나 이미지를 드래그하세요</p>
+                        <input type="file" id="photo-input" accept="image/*" hidden>
+                    </div>
+
+                    <div class="preview-area hidden" id="preview-area">
+                        <img id="preview-image" alt="Preview">
+                        <button class="btn-change" onclick="app.changePhoto()" data-i18n="btnChange">사진 변경</button>
+                    </div>
+                </div>
+
+                <div class="analyzing-area hidden" id="analyzing-area">
+                    <div class="loader"></div>
+                    <p class="analyzing-text" id="analyzing-text" data-i18n="analyzing">AI가 당신의 얼굴을 분석하고 있어요...</p>
+                    <div class="progress-container">
+                        <div class="analysis-progress-text" id="analysis-progress-text">0%</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="analysis-progress"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="age-result hidden" id="age-result">
+                    <div class="result-badge">
+                        <span class="result-label" data-i18n="resultLabel">분석 완료!</span>
+                        <span class="result-value">
+                            <span data-i18n="resultText">당신의 실물 나이는</span>
+                            <strong id="physical-age">--</strong>
+                            <span data-i18n="resultTextAge">세입니다</span>
+                        </span>
+                    </div>
+                </div>
+
+                <button class="btn-primary btn-next hidden" id="btn-next" onclick="app.goToScenario()">
+                    <span data-i18n="btnNext">다음 단계</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scenario Selection Modal -->
+    <div id="scenario-modal" class="scenario-modal">
+        <div class="scenario-modal-content">
+            <h2 class="scenario-modal-title" data-i18n="scenarioTitle">어떤 상황의 마음 나이를 알고 싶으신가요?</h2>
+            <p class="scenario-modal-desc" data-i18n="scenarioDesc">당신의 연령대에 맞는 질문으로 분석합니다</p>
+
+
+
+            <!-- Scenario Cards -->
+            <div class="scenario-cards">
+                <button class="scenario-card" onclick="app.selectScenario('daily')">
+                    <span class="scenario-card-icon">🏠</span>
+                    <strong class="scenario-card-title" data-i18n="scenarioDaily">일상생활</strong>
+                    <small class="scenario-card-desc" data-i18n="scenarioDailyDesc">평소 생활 습관과 일상적인 선택</small>
+                </button>
+
+                <button class="scenario-card" onclick="app.selectScenario('work')">
+                    <span class="scenario-card-icon">💼</span>
+                    <strong class="scenario-card-title" data-i18n="scenarioWork">직장생활</strong>
+                    <small class="scenario-card-desc" data-i18n="scenarioWorkDesc">직장에서의 태도와 업무 스타일</small>
+                </button>
+
+                <button class="scenario-card" onclick="app.selectScenario('romance')">
+                    <span class="scenario-card-icon">💕</span>
+                    <strong class="scenario-card-title" data-i18n="scenarioRomance">연애생활</strong>
+                    <small class="scenario-card-desc" data-i18n="scenarioRomanceDesc">연애와 관계에 대한 태도</small>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Questions Section -->
+    <section id="questions-section" class="section">
+        <div class="container">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <button class="btn-back" id="btn-back" onclick="app.goToPreviousQuestion()" style="display: none;">
+                    ← 이전
+                </button>
+                <div style="flex: 1;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                        <span class="progress-text" id="progress-text">1 / 10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customized Question Notice -->
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <span
+                    style="display: inline-block; padding: 0.5rem 1rem; background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%); border-radius: 20px; font-size: 0.85rem; color: rgba(255, 255, 255, 0.8);"
+                    data-i18n="customQuestionNotice">
+                    당신의 연령·성별에 맞춘 질문입니다
+                </span>
+            </div>
+
+            <!-- AdSense Ad -->
+            <div class="ad-container" style="margin-bottom: 1.5rem;">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7456046576951897"
+                    data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
+            <div class="question-content" id="question-content">
+                <!-- Questions will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Result Section -->
+    <section id="result-section" class="section">
+        <div class="container">
+            <div class="result-content" id="result-content">
+                <h2 class="section-title" data-i18n="resultTitle">결과 분석</h2>
+
+                <div class="age-comparison">
+                    <div class="age-circle">
+                        <div class="circle-inner">
+                            <span class="circle-label" data-i18n="physicalAgeLabel">실물 나이</span>
+                            <span class="circle-value" id="result-physical-age">--</span>
+                            <span class="circle-unit" data-i18n="ageUnit">세</span>
+                        </div>
+                    </div>
+
+                    <div class="vs-badge">VS</div>
+
+                    <div class="age-circle">
+                        <div class="circle-inner">
+                            <span class="circle-label" data-i18n="mentalAgeLabel">마음의 나이</span>
+                            <span class="circle-value" id="result-mental-age">--</span>
+                            <span class="circle-unit" data-i18n="ageUnit">세</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="age-difference" id="age-difference">
+                    <span class="diff-value" id="diff-value">+0</span>
+                </div>
+
+                <div class="result-message" id="result-message">
+                    <div class="message-emoji" id="message-emoji">🎈</div>
+                    <p class="message-text" id="message-text">완벽한 밸런스!</p>
+                </div>
+
+                <!-- Archetype Info -->
+                <div id="archetype-info" class="archetype-container hidden">
+                    <!-- Archetype will be dynamically inserted here -->
+                </div>
+
+                <!-- AdSense Ad -->
+                <div class="ad-container" style="margin: 2rem 0;">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7456046576951897"
+                        data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+
+                <div class="share-buttons">
+                    <button class="btn-share btn-kakao" onclick="app.shareKakao()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 3C6.486 3 2 6.262 2 10.5c0 2.545 1.634 4.792 4.114 6.217l-1.037 3.793c-.065.238.108.474.35.474.092 0 .186-.034.258-.101l4.375-3.245C10.695 17.82 11.34 17.9 12 17.9c5.514 0 10-3.262 10-7.4S17.514 3 12 3z" />
+                        </svg>
+                        카카오톡
+                    </button>
+
+                    <button class="btn-share btn-twitter" onclick="app.shareTwitter()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                        X
+                    </button>
+
+                    <button class="btn-share btn-instagram" onclick="app.shareInstagram()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
+                        </svg>
+                        Instagram
+                    </button>
+
+                    <button class="btn-share btn-link" onclick="app.copyLink()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                        </svg>
+                        <span data-i18n="btnCopyLink">링크 복사</span>
+                    </button>
+
+                    <button class="btn-share btn-download" onclick="app.downloadImage()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                        </svg>
+                        <span data-i18n="btnDownload">이미지 저장</span>
+                    </button>
+                </div>
+
+                <button class="btn-restart" onclick="app.restart()">
+                    <span data-i18n="btnRestart">다시 테스트하기</span>
+                </button>
+
+                <button class="btn-view-history" onclick="app.openHistory()">
+                    <span data-i18n="btnHistory">📊 내 기록 보기</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Policy Modals -->
+    <div id="privacy-modal" class="policy-modal" style="display:none;">
+        <div class="policy-modal-content">
+            <button class="policy-modal-close" onclick="closePolicyModal('privacy-modal')">&times;</button>
+            <div class="policy-modal-body" id="privacy-content">
+                <h1>개인정보처리방침</h1>
+                <p><strong>최종 수정일:</strong> 2025년 12월 14일</p>
+                <div class="lang-switch">
+                    <a href="#" onclick="loadPrivacy('ko'); return false;">한국어</a> |
+                    <a href="#" onclick="loadPrivacy('en'); return false;">English</a> |
+                    <a href="#" onclick="loadPrivacy('zh'); return false;">中文</a>
+                </div>
+                <div id="privacy-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="terms-modal" class="policy-modal" style="display:none;">
+        <div class="policy-modal-content">
+            <button class="policy-modal-close" onclick="closePolicyModal('terms-modal')">&times;</button>
+            <div class="policy-modal-body" id="terms-content">
+                <h1>이용약관</h1>
+                <p><strong>최종 수정일:</strong> 2025년 12월 14일</p>
+                <div class="lang-switch">
+                    <a href="#" onclick="loadTerms('ko'); return false;">한국어</a> |
+                    <a href="#" onclick="loadTerms('en'); return false;">English</a> |
+                    <a href="#" onclick="loadTerms('zh'); return false;">中文</a>
+                </div>
+                <div id="terms-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Modal -->
+    <div id="history-modal" class="policy-modal" style="display:none;">
+        <div class="policy-modal-content history-content">
+            <button class="policy-modal-close" onclick="app.closeHistory()">&times;</button>
+            <div class="policy-modal-body">
+                <h1 data-i18n="historyTitle">내 마음 나이 기록</h1>
+
+                <div id="history-stats" class="history-stats">
+                    <!-- Stats will be inserted automatically -->
+                </div>
+
+                <div class="history-chart-container" style="margin-bottom: 2rem; height: 250px; position: relative;">
+                    <canvas id="historyChart"></canvas>
+                </div>
+
+                <div class="history-list-header">
+                    <h3 data-i18n="historyRecords">기록</h3>
+                    <button class="btn-clear-history" onclick="app.clearHistory()" data-i18n="historyClearAll">전체
+                        삭제</button>
+                </div>
+
+                <div id="history-list" class="history-list">
+                    <!-- History items will be inserted automatically -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-close-modal" onclick="app.closeHistory()" data-i18n="historyClose">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Confirm Modal -->
+    <div id="confirm-modal" class="policy-modal"
+        style="display:none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2147483647 !important; background: rgba(0,0,0,0.85); align-items: center; justify-content: center;">
+        <div class="policy-modal-content"
+            style="max-width: 320px; width: 90%; text-align: center; padding: 24px; margin: auto; position: relative; z-index: 2147483648; background: #1e1b4b; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+            <p id="confirm-message"
+                style="margin: 0 0 24px 0; font-size: 1.1rem; font-weight: 500; color: #f8fafc; white-space: pre-wrap;">
+                Are you sure?</p>
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button type="button" onclick="window.resolveConfirm(false)"
+                    style="padding: 12px 24px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #cbd5e1; cursor: pointer; font-family: inherit; font-size: 1rem;">
+                    취소
+                </button>
+                <button type="button" onclick="window.resolveConfirm(true)"
+                    style="padding: 12px 24px; border-radius: 12px; border: none; background: #ef4444; color: white; cursor: pointer; font-weight: 600; font-family: inherit; font-size: 1rem; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">
+                    삭제
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Policy Links Footer -->
+    <div style="text-align: center; padding: 1rem; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+        <a href="#" onclick="openPolicyModal('privacy-modal'); return false;"
+            style="color: var(--text-secondary); text-decoration: none; margin: 0 1rem; font-size: 0.85rem;"
+            data-i18n="privacyPolicy">개인정보처리방침</a>
+        <span style="color: var(--text-secondary);">|</span>
+        <a href="#" onclick="openPolicyModal('terms-modal'); return false;"
+            style="color: var(--text-secondary); text-decoration: none; margin: 0 1rem; font-size: 0.85rem;"
+            data-i18n="termsOfService">이용약관</a>
+        <span style="color: var(--text-secondary);">|</span>
+        <a href="mailto:hyukchm@gmail.com"
+            style="color: var(--text-secondary); text-decoration: none; margin: 0 1rem; font-size: 0.85rem;"
+            data-i18n="contact">문의하기</a>
+    </div>
+
+    <!-- Version Footer (동적으로 업데이트됨) -->
+    <div class="version-footer" id="version-footer">
+        Loading...
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/colorthief@2.3.0/dist/color-thief.umd.js"></script>
+
+
+    <!-- Version-managed scripts -->
+    <script>
+        // 버전 기반 캐시 무효화를 위한 동적 스크립트 로딩
+        (function () {
+            const version = CONFIG.VERSION;
+            const scripts = [
+                'js/i18n/ko.js',
+                'js/i18n/en.js',
+                'js/i18n/zh.js',
+                'js/questions.js',
+                'js/ageDetection.js',
+                'js/faceShape.js',
+                'js/personalColor.js',
+                'js/share.js',
+                'js/i18n.js',
+                'js/particles.js',
+                'js/history.js',
+                'js/policy-modal.js'
+            ];
+
+            scripts.forEach(src => {
+                const script = document.createElement('script');
+                script.src = `${src}?v=${version}`;
+                document.write(script.outerHTML);
+            });
+
+            // app.js는 module이므로 별도 처리
+            const appScript = document.createElement('script');
+            appScript.type = 'module';
+            appScript.src = `js/app.js?v=${version}`;
+            document.write(appScript.outerHTML);
+
+            // 버전 푸터 업데이트
+            document.addEventListener('DOMContentLoaded', () => {
+                const versionFooter = document.getElementById('version-footer');
+                if (versionFooter) {
+                    versionFooter.textContent = `v${CONFIG.VERSION} (${CONFIG.VERSION_NAME})`;
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>

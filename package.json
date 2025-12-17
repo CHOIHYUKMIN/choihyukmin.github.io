@@ -1,0 +1,23 @@
+{
+  "name": "mindage-app",
+  "version": "1.0.0",
+  "description": "Mental Age Calculator Mobile App",
+  "main": "index.html",
+  "scripts": {
+    "copy-www": "xcopy /E /I /Y index.html www\\ && xcopy /E /I /Y css www\\css\\ && xcopy /E /I /Y js www\\js\\ && xcopy /E /I /Y img www\\img\\ && xcopy /Y *.png www\\ && xcopy /Y *.svg www\\ && xcopy /Y *.html www\\",
+    "sync": "npm run copy-www && npx cap sync",
+    "open:android": "npx cap open android"
+  },
+  "keywords": [
+    "mental-age",
+    "psychology",
+    "mobile-app"
+  ],
+  "author": "CHOIHYUKMIN",
+  "license": "MIT",
+  "dependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/cli": "^8.0.0",
+    "@capacitor/core": "^8.0.0"
+  }
+}

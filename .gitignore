@@ -30,3 +30,15 @@ build/
 # Local environment
 .env
 .env.local
+
+# Capacitor / Android
+android/app/build/
+android/app/release/
+android/.gradle/
+android/build/
+*.keystore
+*.jks
+
+# www folder is tracked (needed for GitHub Actions)
+# But ignore temp files
+www/.DS_Store
