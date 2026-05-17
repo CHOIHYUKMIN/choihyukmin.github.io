@@ -39,6 +39,7 @@ android/build/
 *.keystore
 *.jks
 
-# www folder is tracked (needed for GitHub Actions)
-# But ignore temp files
+# www/ is tracked in git so Capacitor can sync locally without running copy-www.
+# GitHub Actions regenerates www/ fresh on every build (see .github/workflows/android-build.yml).
+# To sync locally: npm run copy-www && npx cap sync
 www/.DS_Store

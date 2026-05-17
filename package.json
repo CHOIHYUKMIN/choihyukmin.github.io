@@ -4,7 +4,7 @@
   "description": "Mental Age Calculator Mobile App",
   "main": "index.html",
   "scripts": {
-    "copy-www": "xcopy /E /I /Y index.html www\\ && xcopy /E /I /Y css www\\css\\ && xcopy /E /I /Y js www\\js\\ && xcopy /E /I /Y img www\\img\\ && xcopy /Y *.png www\\ && xcopy /Y *.svg www\\ && xcopy /Y *.html www\\",
+    "copy-www": "node -e \"const {cpSync,mkdirSync}=require('fs');mkdirSync('www/js',{recursive:true});mkdirSync('www/css',{recursive:true});['index.html','privacy.html','privacy_en.html','privacy_zh.html','terms.html','favicon.png','favicon.svg','manifest.json'].forEach(f=>{try{cpSync(f,'www/'+f);}catch(e){}});cpSync('css','www/css',{recursive:true,force:true});cpSync('js','www/js',{recursive:true,force:true});\"",
     "sync": "npm run copy-www && npx cap sync",
     "open:android": "npx cap open android"
   },

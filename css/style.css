@@ -1427,6 +1427,44 @@ body {
     overflow-y: auto;
     text-align: center;
     animation: modalSlideIn 0.4s ease-out;
+    position: relative;
+}
+
+.scenario-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.scenario-modal-close:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+}
+
+.mind-age-chart-container {
+    margin: 1.5rem 0;
+    padding: 1.25rem;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mind-age-chart-container .chart-title {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    font-weight: 500;
 }
 
 @keyframes modalSlideIn {

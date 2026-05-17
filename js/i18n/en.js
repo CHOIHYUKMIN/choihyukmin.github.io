@@ -37,6 +37,32 @@ const translations_en = {
     scenarioFamily: "Family Life",
     scenarioFamilyDesc: "Your family and couple relationships",
     btnStartQuestions: "Start Questions",
+    btnCancelScenario: "Cancel",
+    btnPrevQuestion: "← Back",
+
+    // Result Chart
+    chartTitle: "Mind Age Analysis",
+    chartEmotion: "Emotion",
+    chartResponsibility: "Responsibility",
+    chartRelationship: "Relationship",
+    chartValues: "Values",
+    chartSelf: "Self-Awareness",
+
+    // Result personalized context (ageGroup_gender)
+    ctx_teen_male: "A truly unique mind age among teenage guys! 🎮",
+    ctx_teen_female: "You have a special sensitivity as a teenage girl! 💜",
+    ctx_twenties_male: "A remarkable depth of mind among men in your 20s! 💼",
+    ctx_twenties_female: "A rich emotional world for a woman in her 20s! 🌸",
+    ctx_thirties_male: "A balanced perspective from a man in his 30s! 🏋️",
+    ctx_thirties_female: "The wisdom of a woman in her 30s shines through! 🌿",
+    ctx_forties_male: "Experience and youthful energy coexist in a man in his 40s! 🎯",
+    ctx_forties_female: "The deep strength of a woman in her 40s is remarkable! 💎",
+    ctx_fifties_male: "The seasoned charm of a man in his 50s! 🏔️",
+    ctx_fifties_female: "The elegant depth of a woman in her 50s stands out! 🌺",
+    ctx_sixties_male: "The wisdom and experience of a man in his 60s shines! 🌟",
+    ctx_sixties_female: "The life depth of a woman in her 60s is felt here! 🌙",
+    ctx_seventies_male: "The lifelong wisdom of a man in his 70s is present! 🌿",
+    ctx_seventies_female: "A result that reflects the journey of a woman in her 70s! 🕊️",
 
     // Questions
     progressText: "{current} / {total}",
@@ -147,6 +173,14 @@ const translations_en = {
     historyClose: "Close",
     historyClearConfirm: "Are you sure you want to clear all history?",
     historyDeleteConfirm: "Are you sure you want to delete this record?",
+    historyLabelScenario: "Scenario",
+    historyLabelDate: "Date",
+    historyLabelGender: "Gender",
+    historyLabelEmotion: "Emotion",
+    historyLabelFaceShape: "Face Shape",
+    historyLabelPersonalColor: "Personal Color",
+    historyGenderMale: "Male",
+    historyGenderFemale: "Female",
 
     // Emotions
     emotion_happy: "Happy 😊",

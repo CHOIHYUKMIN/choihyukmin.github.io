@@ -245,10 +245,9 @@
     <!-- Scenario Selection Modal -->
     <div id="scenario-modal" class="scenario-modal">
         <div class="scenario-modal-content">
+            <button class="scenario-modal-close" onclick="app.cancelScenario()" data-i18n="btnCancelScenario">취소</button>
             <h2 class="scenario-modal-title" data-i18n="scenarioTitle">어떤 상황의 마음 나이를 알고 싶으신가요?</h2>
             <p class="scenario-modal-desc" data-i18n="scenarioDesc">당신의 연령대에 맞는 질문으로 분석합니다</p>
-
-
 
             <!-- Scenario Cards -->
             <div class="scenario-cards">
@@ -277,7 +276,7 @@
     <section id="questions-section" class="section">
         <div class="container">
             <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                <button class="btn-back" id="btn-back" onclick="app.goToPreviousQuestion()" style="display: none;">
+                <button class="btn-back" id="btn-back" onclick="app.goToPreviousQuestion()" style="display: none;" data-i18n="btnPrevQuestion">
                     ← 이전
                 </button>
                 <div style="flex: 1;">
@@ -345,6 +344,12 @@
                 <div class="result-message" id="result-message">
                     <div class="message-emoji" id="message-emoji">🎈</div>
                     <p class="message-text" id="message-text">완벽한 밸런스!</p>
+                </div>
+
+                <!-- Mind Age Category Radar Chart -->
+                <div id="mind-age-chart-container" class="mind-age-chart-container hidden">
+                    <h3 class="chart-title" data-i18n="chartTitle">마음 나이 분석</h3>
+                    <canvas id="mindAgeChart" width="300" height="300"></canvas>
                 </div>
 
                 <!-- Archetype Info -->
@@ -521,7 +526,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/colorthief@2.3.0/dist/color-thief.umd.js"></script>
 

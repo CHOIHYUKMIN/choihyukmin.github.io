@@ -37,10 +37,36 @@ const translations_ko = {
     scenarioFamily: "가족생활",
     scenarioFamilyDesc: "가족 관계와 부부 생활",
     btnStartQuestions: "질문 시작하기",
+    btnCancelScenario: "취소",
+    btnPrevQuestion: "← 이전",
 
     // Questions
     progressText: "{current} / {total}",
     customQuestionNotice: "당신의 연령·성별에 맞춘 질문입니다",
+
+    // Result Chart
+    chartTitle: "마음 나이 분석",
+    chartEmotion: "정서",
+    chartResponsibility: "책임감",
+    chartRelationship: "관계",
+    chartValues: "가치관",
+    chartSelf: "자기성찰",
+
+    // Result personalized context (ageGroup_gender)
+    ctx_teen_male: "십대 남성 중에서도 특별한 마음의 나이네요! 🎮",
+    ctx_teen_female: "십대 여성으로서 남다른 감성을 갖고 있어요! 💜",
+    ctx_twenties_male: "20대 남성 중에서 눈에 띄는 마음의 깊이예요! 💼",
+    ctx_twenties_female: "20대 여성답게 감수성 풍부한 마음이네요! 🌸",
+    ctx_thirties_male: "30대 남성으로서 균형잡힌 시각을 보여줘요! 🏋️",
+    ctx_thirties_female: "30대 여성의 지혜로움이 마음에 배어 있어요! 🌿",
+    ctx_forties_male: "40대 남성의 경륜과 젊은 감성이 공존해요! 🎯",
+    ctx_forties_female: "40대 여성의 깊은 내공이 느껴지는 결과예요! 💎",
+    ctx_fifties_male: "50대 남성만의 원숙한 멋이 있어요! 🏔️",
+    ctx_fifties_female: "50대 여성의 우아한 깊이가 돋보여요! 🌺",
+    ctx_sixties_male: "60대 남성의 지혜와 경험이 빛나요! 🌟",
+    ctx_sixties_female: "60대 여성만의 인생 내공이 느껴져요! 🌙",
+    ctx_seventies_male: "70대 남성의 살아온 지혜가 담겨 있어요! 🌿",
+    ctx_seventies_female: "70대 여성의 삶의 내력이 느껴지는 결과예요! 🕊️",
 
     // Result Screen
     resultTitle: "결과 분석",
@@ -152,6 +178,14 @@ const translations_ko = {
     historyClearConfirm: "모든 기록을 삭제하시겠습니까?",
     historyDeleteConfirm: "삭제하시겠습니까?",
     historyClose: "닫기",
+    historyLabelScenario: "시나리오",
+    historyLabelDate: "일시",
+    historyLabelGender: "성별",
+    historyLabelEmotion: "감정",
+    historyLabelFaceShape: "얼굴형",
+    historyLabelPersonalColor: "퍼스널 컬러",
+    historyGenderMale: "남성",
+    historyGenderFemale: "여성",
 
     // Emotions
     emotion_happy: "행복 😊",

@@ -37,10 +37,36 @@ const translations_zh = {
     scenarioFamily: "家庭生活",
     scenarioFamilyDesc: "家庭关系和夫妻生活",
     btnStartQuestions: "开始问题",
+    btnCancelScenario: "取消",
+    btnPrevQuestion: "← 上一题",
 
     // Questions
     progressText: "{current} / {total}",
     customQuestionNotice: "根据您的年龄和性别定制的问题",
+
+    // Result personalized context (ageGroup_gender)
+    ctx_teen_male: "在十几岁男生中，心理年龄很特别！🎮",
+    ctx_teen_female: "作为十几岁女生，你有独特的感性！💜",
+    ctx_twenties_male: "在二十多岁男性中，心灵深度突出！💼",
+    ctx_twenties_female: "二十多岁女性特有的丰富情感世界！🌸",
+    ctx_thirties_male: "三十多岁男性的均衡视角令人印象深刻！🏋️",
+    ctx_thirties_female: "三十多岁女性的智慧在这里闪耀！🌿",
+    ctx_forties_male: "四十多岁男性的经验与年轻活力并存！🎯",
+    ctx_forties_female: "四十多岁女性的深厚内力令人赞叹！💎",
+    ctx_fifties_male: "五十多岁男性独有的成熟魅力！🏔️",
+    ctx_fifties_female: "五十多岁女性的优雅深度脱颖而出！🌺",
+    ctx_sixties_male: "六十多岁男性的智慧与经验闪耀！🌟",
+    ctx_sixties_female: "六十多岁女性的人生深度在此体现！🌙",
+    ctx_seventies_male: "七十多岁男性毕生的智慧尽在其中！🌿",
+    ctx_seventies_female: "七十多岁女性的人生历程在结果中呈现！🕊️",
+
+    // Result Chart
+    chartTitle: "心理年龄分析",
+    chartEmotion: "情绪",
+    chartResponsibility: "责任感",
+    chartRelationship: "关系",
+    chartValues: "价值观",
+    chartSelf: "自我认知",
 
     // Result Screen
     resultTitle: "测试结果",
@@ -147,6 +173,14 @@ const translations_zh = {
     historyClose: "关闭",
     historyClearConfirm: "确定要删除所有记录吗？",
     historyDeleteConfirm: "确定要删除这条记录吗？",
+    historyLabelScenario: "场景",
+    historyLabelDate: "日期",
+    historyLabelGender: "性别",
+    historyLabelEmotion: "情绪",
+    historyLabelFaceShape: "脸型",
+    historyLabelPersonalColor: "个人色彩",
+    historyGenderMale: "男性",
+    historyGenderFemale: "女性",
 
     // Emotions
     emotion_happy: "快乐 😊",

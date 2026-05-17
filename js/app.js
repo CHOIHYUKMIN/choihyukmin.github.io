@@ -42,7 +42,8 @@ const app = {
         if (age < 40) return 'thirties';
         if (age < 50) return 'forties';
         if (age < 60) return 'fifties';
-        return 'sixties';
+        if (age < 70) return 'sixties';
+        return 'seventies';
     },
 
     // Helper: Shuffle array (Fisher-Yates algorithm)
@@ -354,6 +355,11 @@ const app = {
 
     goToUpload() {
         this.showSection('upload');
+        // 사진 선택 전에 AI 모델 백그라운드 프리로딩 시작
+        if (typeof initAgeDetection === 'function' && !window._faceApiPreloading) {
+            window._faceApiPreloading = true;
+            initAgeDetection().catch(() => {});
+        }
     },
 
     // Upload area setup
@@ -718,28 +724,7 @@ const app = {
 
         document.getElementById('message-emoji').textContent = emoji;
         document.getElementById('message-text').textContent = message;
-
-        // Display archetype if available
-        /*
-        if (this.archetype) {
-            const archetypeContainer = document.getElementById('archetype-info');
-            if (archetypeContainer) {
-                const archetypeTitle = i18n.t('archetypeTitle');
-                const imagePath = this.getArchetypeImage(this.archetype.code);
-                const imageHtml = imagePath ? `<img src="${imagePath}" class="archetype-image" alt="${this.archetype.name}">` : '';
-
-                archetypeContainer.innerHTML = `
-                    <div class="archetype-badge">
-                        <div class="archetype-title">${archetypeTitle}</div>
-                        <!-- ${imageHtml} -->
-                        <div class="archetype-name">✨ ${this.archetype.name}</div>
-                        <div class="archetype-desc">${this.archetype.desc}</div>
-                    </div>
-                `;
-                archetypeContainer.classList.remove('hidden');
-            }
-        }
-        */
+        this.renderPersonalizedContext();
 
         // Display additional analysis results
         this.displayAdditionalAnalysis();
@@ -870,14 +855,24 @@ const app = {
         this.uploadedImage = null;
         this.physicalAge = null;
         this.mentalAge = null;
+        this.mindAge = null;
         this.gender = null;
         this.genderProbability = null;
         this.ageGroup = null;
+        this.ageGroupObj = null;
         this.currentQuestionIndex = 0;
         this.answers = [];
         this.totalScore = 0;
         this.currentQuestionSet = [];
         this.archetype = null;
+        this.currentScenario = null;
+        this.currentScenarioQuestions = [];
+        this.scenarioAnswers = {};
+        this.emotion = null;
+        this.emotionConfidence = null;
+        this.expressions = null;
+        this.faceShape = null;
+        this.personalColor = null;
 
         // Reset UI
         document.getElementById('upload-area').classList.remove('hidden');
@@ -893,6 +888,12 @@ const app = {
     // ============================================
     // Scenario System Functions
     // ============================================
+
+    // 시나리오 모달 취소 (업로드 화면으로 복귀)
+    cancelScenario() {
+        const modal = document.getElementById('scenario-modal');
+        if (modal) modal.classList.remove('active');
+    },
 
     // 시나리오 선택 모달 표시
     goToScenario() {
@@ -1026,13 +1027,16 @@ const app = {
             // 옵션 순서를 랜덤하게 섞기 (패턴 답변 방지)
             const shuffledOptions = this.shuffleArray(question.options);
 
-            // 새 시스템은 options가 배열
-            shuffledOptions.forEach((option, index) => {
+            shuffledOptions.forEach((option) => {
                 const optionLabel = option.label[i18n.currentLang] || option.label.ko;
                 const optionBtn = document.createElement('button');
                 optionBtn.className = 'option-btn';
                 optionBtn.textContent = optionLabel;
-                optionBtn.onclick = () => this.selectScenarioAnswer(question.id, option.score);
+                optionBtn.onclick = (e) => {
+                    optionsContainer.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                    e.currentTarget.classList.add('selected');
+                    this.selectScenarioAnswer(question.id, option.score);
+                };
 
                 // 이미 선택한 답변이 있으면 표시
                 if (this.scenarioAnswers[this.currentScenario.id]?.[question.id] === option.score) {
@@ -1051,11 +1055,6 @@ const app = {
     selectScenarioAnswer(questionId, value) {
         // 답변 저장
         this.scenarioAnswers[this.currentScenario.id][questionId] = value;
-
-        // 선택 표시
-        const options = document.querySelectorAll('.option-btn');
-        options.forEach(btn => btn.classList.remove('selected'));
-        event.target.classList.add('selected');
 
         // 바로 다음 질문으로
         if (this.currentQuestionIndex < this.currentQuestionSet.length - 1) {
@@ -1157,15 +1156,86 @@ const app = {
 
         this.mindAge = Math.max(10, Math.min(99, mindAge));  // 10~99 범위로 제한
         this.mentalAge = this.mindAge;  // mentalAge도 설정 (결과 표시용)
-
-        console.log(`Mind Age Calculation:`, {
-            base,
-            categoryAverages,
-            weightedScore: weightedScore.toFixed(2),
-            mindAge: this.mindAge
-        });
+        this.categoryAverages = categoryAverages;  // 차트 렌더링용 저장
 
         return this.mindAge;
+    },
+
+    // 연령대·성별 개인화 컨텍스트 문구 표시
+    renderPersonalizedContext() {
+        const ctxKey = `ctx_${this.ageGroup}_${this.gender}`;
+        const ctxMsg = i18n.t(ctxKey);
+        if (!ctxMsg) return;
+
+        let ctxEl = document.getElementById('result-context');
+        if (!ctxEl) {
+            ctxEl = document.createElement('p');
+            ctxEl.id = 'result-context';
+            ctxEl.style.cssText = 'font-size:0.83rem;color:rgba(255,255,255,0.55);text-align:center;margin-top:0.5rem;';
+            document.getElementById('result-message')?.appendChild(ctxEl);
+        }
+        ctxEl.textContent = ctxMsg;
+    },
+
+    // 카테고리 레이더 차트 렌더링
+    renderMindAgeChart() {
+        if (!window.Chart || !this.categoryAverages) return;
+
+        const container = document.getElementById('mind-age-chart-container');
+        const canvas = document.getElementById('mindAgeChart');
+        if (!container || !canvas) return;
+
+        container.classList.remove('hidden');
+
+        if (this.mindAgeChartInstance) {
+            this.mindAgeChartInstance.destroy();
+        }
+
+        const labels = [
+            i18n.t('chartEmotion'),
+            i18n.t('chartResponsibility'),
+            i18n.t('chartRelationship'),
+            i18n.t('chartValues'),
+            i18n.t('chartSelf'),
+        ];
+
+        const data = [
+            this.categoryAverages.emotion ?? 3,
+            this.categoryAverages.responsibility ?? 3,
+            this.categoryAverages.relationship ?? 3,
+            this.categoryAverages.values ?? 3,
+            this.categoryAverages.self ?? 3,
+        ];
+
+        this.mindAgeChartInstance = new Chart(canvas, {
+            type: 'radar',
+            data: {
+                labels,
+                datasets: [{
+                    data,
+                    backgroundColor: 'rgba(102, 126, 234, 0.25)',
+                    borderColor: 'rgba(102, 126, 234, 0.9)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(245, 87, 108, 0.9)',
+                    pointRadius: 4,
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    r: {
+                        min: 1,
+                        max: 5,
+                        ticks: { stepSize: 1, color: 'rgba(255,255,255,0.5)', font: { size: 10 } },
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        angleLines: { color: 'rgba(255,255,255,0.15)' },
+                        pointLabels: { color: 'rgba(255,255,255,0.85)', font: { size: 12 } },
+                    },
+                },
+            },
+        });
     },
 
     // 결과 화면으로 이동
@@ -1194,9 +1264,13 @@ const app = {
 
         document.getElementById('message-emoji').textContent = emoji;
         document.getElementById('message-text').textContent = message;
+        this.renderPersonalizedContext();
 
         // Display additional analysis results
         this.displayAdditionalAnalysis();
+
+        // Render category radar chart
+        this.renderMindAgeChart();
 
         // Store message for sharing
         this.resultMessage = message;
@@ -1324,7 +1398,7 @@ const app = {
             const scenarioName = i18n.t(`scenario${item.scenario.charAt(0).toUpperCase() + item.scenario.slice(1)}`) || item.scenario;
 
             // 상세 정보 포맷팅
-            const genderText = item.gender === 'male' ? (i18n.currentLang === 'ko' ? '남성' : 'Male') : (i18n.currentLang === 'ko' ? '여성' : 'Female');
+            const genderText = item.gender === 'male' ? i18n.t('historyGenderMale') : i18n.t('historyGenderFemale');
             const emotionText = item.emotion ? (i18n.t(`emotion_${item.emotion}`) || item.emotion) : '-';
             // faceShape 처리
             let faceShapeText = '-';
@@ -1394,28 +1468,28 @@ const app = {
                         </div>
                     </div>
                     <div class="history-details">
-                         <div class="detail-row">
-                            <span class="detail-label">시나리오:</span>
+                        <div class="detail-row">
+                            <span class="detail-label">${i18n.t('historyLabelScenario')}:</span>
                             <span class="detail-value">${scenarioName}</span>
                         </div>
                         <div class="detail-row">
-                            <span class="detail-label">일시:</span>
+                            <span class="detail-label">${i18n.t('historyLabelDate')}:</span>
                             <span class="detail-value">${date} ${time}</span>
                         </div>
                         <div class="detail-row">
-                            <span class="detail-label">성별:</span>
+                            <span class="detail-label">${i18n.t('historyLabelGender')}:</span>
                             <span class="detail-value">${genderText}</span>
                         </div>
                         <div class="detail-row">
-                            <span class="detail-label">감정:</span>
+                            <span class="detail-label">${i18n.t('historyLabelEmotion')}:</span>
                             <span class="detail-value">${emotionText}</span>
                         </div>
                         <div class="detail-row">
-                            <span class="detail-label">얼굴형:</span>
+                            <span class="detail-label">${i18n.t('historyLabelFaceShape')}:</span>
                             <span class="detail-value">${faceShapeText}</span>
                         </div>
                         <div class="detail-row">
-                            <span class="detail-label">퍼스널 컬러:</span>
+                            <span class="detail-label">${i18n.t('historyLabelPersonalColor')}:</span>
                             <span class="detail-value">${personalColorText}</span>
                         </div>
                     </div>

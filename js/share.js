@@ -139,67 +139,56 @@ async function downloadResultImage() {
     try {
         const resultSection = document.getElementById('result-content');
 
-        // Temporarily hide buttons for cleaner capture
-        const shareButtons = resultSection.querySelector('.share-buttons');
-        const restartBtn = resultSection.querySelector('.btn-restart');
-        const adContainers = resultSection.querySelectorAll('.ad-container');
+        // 공유 이미지에서 숨길 요소들
+        const hideSelectors = ['.share-buttons', '.btn-restart', '.btn-view-history', '.ad-container', '.additional-analysis'];
+        const hiddenEls = hideSelectors.flatMap(sel => Array.from(resultSection.querySelectorAll(sel)));
+        const origDisplays = hiddenEls.map(el => el.style.display);
+        hiddenEls.forEach(el => el.style.display = 'none');
 
-        const originalShareDisplay = shareButtons ? shareButtons.style.display : '';
-        const originalRestartDisplay = restartBtn ? restartBtn.style.display : '';
-        const originalAdDisplays = Array.from(adContainers).map(ad => ad.style.display);
-
-        if (shareButtons) shareButtons.style.display = 'none';
-        if (restartBtn) restartBtn.style.display = 'none';
-        adContainers.forEach(ad => ad.style.display = 'none');
-
-        // Add watermark
+        // 워터마크 추가
         const watermark = document.createElement('div');
         watermark.style.cssText = `
             text-align: center;
-            padding: 1.5rem 0;
-            margin-top: 2rem;
+            padding: 1.25rem 0 0.5rem;
+            margin-top: 1.5rem;
             border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            font-family: 'Inter', sans-serif;
         `;
         watermark.innerHTML = `
-            <div style="margin-bottom: 0.5rem; font-weight: 600; font-size: 1rem;">마음의 나이 계산기</div>
-            <div>${window.location.origin}${window.location.pathname}</div>
+            <div style="font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; background: linear-gradient(135deg,#667eea,#f5576c); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">마음의 나이 계산기</div>
+            <div style="font-size: 0.75rem; opacity: 0.7;">${window.location.hostname}</div>
         `;
         resultSection.appendChild(watermark);
 
-        // Use html2canvas to capture the result section
         const canvas = await html2canvas(resultSection, {
             backgroundColor: '#0f0f23',
-            scale: 3, // Higher quality for sharing
+            scale: window.devicePixelRatio >= 2 ? 2 : 3,
             logging: false,
             useCORS: true,
-            allowTaint: true
+            allowTaint: true,
+            width: resultSection.offsetWidth,
+            windowWidth: resultSection.offsetWidth,
         });
 
-        // Remove watermark and restore buttons
+        // 원상복구
         watermark.remove();
-        if (shareButtons) shareButtons.style.display = originalShareDisplay;
-        if (restartBtn) restartBtn.style.display = originalRestartDisplay;
-        adContainers.forEach((ad, i) => ad.style.display = originalAdDisplays[i]);
+        hiddenEls.forEach((el, i) => el.style.display = origDisplays[i]);
 
-        // Convert canvas to blob
         canvas.toBlob((blob) => {
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
-            const timestamp = new Date().toISOString().split('T')[0];
-            link.download = `mental_age_result_${timestamp}.png`;
+            link.download = `mental_age_${new Date().toISOString().split('T')[0]}.png`;
             link.href = url;
             link.click();
-
-            // Clean up
             setTimeout(() => URL.revokeObjectURL(url), 100);
         }, 'image/png');
 
         return true;
     } catch (error) {
-        console.error('Error downloading image:', error);
-        alert('이미지 저장에 실패했습니다. 다시 시도해주세요.');
+        const msg = (typeof i18n !== 'undefined' && i18n.t) ? i18n.t('errorDownload') : '이미지 저장에 실패했습니다.';
+        alert(msg);
         return false;
     }
 }
