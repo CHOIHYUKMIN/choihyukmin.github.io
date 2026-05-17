@@ -140,6 +140,8 @@
                     <div class="shape shape-3"></div>
                 </div>
 
+                <div class="trust-badge">✨ AI 얼굴 분석 · 심리 테스트</div>
+
                 <h1 class="main-title" data-i18n="title">
                     당신의 마음은<br>몇 살인가요?
                 </h1>
@@ -155,7 +157,7 @@
                 </button>
 
                 <button class="btn-view-history" onclick="window.app && window.app.openHistory()"
-                    style="margin-top: 1rem;">
+                    style="margin-top: 1rem; display: block; margin-left: auto; margin-right: auto;">
                     <span data-i18n="btnHistory">📊 내 기록 보기</span>
                 </button>
 
@@ -275,15 +277,15 @@
     <!-- Questions Section -->
     <section id="questions-section" class="section">
         <div class="container">
-            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
                 <button class="btn-back" id="btn-back" onclick="app.goToPreviousQuestion()" style="display: none;" data-i18n="btnPrevQuestion">
                     ← 이전
                 </button>
                 <div style="flex: 1;">
                     <div class="progress-bar">
                         <div class="progress-fill" id="progress-fill"></div>
-                        <span class="progress-text" id="progress-text">1 / 10</span>
                     </div>
+                    <span id="progress-text" style="display:block;text-align:right;font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:0.3rem;font-family:'Poppins',sans-serif;font-weight:600;letter-spacing:0.5px;">1 / 10</span>
                 </div>
             </div>
 
@@ -338,7 +340,9 @@
                 </div>
 
                 <div class="age-difference" id="age-difference">
-                    <span class="diff-value" id="diff-value">+0</span>
+                    <div class="diff-pill">
+                        <span class="diff-value" id="diff-value">+0</span>
+                    </div>
                 </div>
 
                 <div class="result-message" id="result-message">
