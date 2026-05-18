@@ -362,6 +362,72 @@ const app = {
         }
     },
 
+    // ── 카메라 기능 ──────────────────────────
+    async openCamera() {
+        const cameraArea = document.getElementById('camera-area');
+        const video = document.getElementById('camera-video');
+        const orRow = document.getElementById('upload-or-row');
+        const btnCamera = document.getElementById('btn-camera');
+        const uploadArea = document.getElementById('upload-area');
+
+        try {
+            this._cameraStream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } }
+            });
+            video.srcObject = this._cameraStream;
+            cameraArea.classList.remove('hidden');
+            if (orRow) orRow.classList.add('hidden');
+            if (btnCamera) btnCamera.classList.add('hidden');
+            if (uploadArea) uploadArea.parentElement.classList.add('hidden');
+        } catch {
+            alert('카메라를 사용할 수 없습니다. 갤러리에서 사진을 선택해주세요.');
+        }
+    },
+
+    capturePhoto() {
+        const video = document.getElementById('camera-video');
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        canvas.toBlob((blob) => {
+            const file = new File([blob], 'camera_capture.jpg', { type: 'image/jpeg' });
+            this.closeCamera();
+            this._loadImageFile(file);
+        }, 'image/jpeg', 0.9);
+    },
+
+    closeCamera() {
+        if (this._cameraStream) {
+            this._cameraStream.getTracks().forEach(t => t.stop());
+            this._cameraStream = null;
+        }
+        const cameraArea = document.getElementById('camera-area');
+        const orRow = document.getElementById('upload-or-row');
+        const btnCamera = document.getElementById('btn-camera');
+        const uploadCard = document.getElementById('upload-card');
+        if (cameraArea) cameraArea.classList.add('hidden');
+        if (orRow) orRow.classList.remove('hidden');
+        if (btnCamera) btnCamera.classList.remove('hidden');
+        if (uploadCard) uploadCard.classList.remove('hidden');
+        const uploadArea = document.getElementById('upload-area');
+        if (uploadArea) uploadArea.parentElement.classList.remove('hidden');
+    },
+
+    _loadImageFile(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            this.uploadedImage = e.target.result;
+            document.getElementById('upload-area').classList.add('hidden');
+            const previewArea = document.getElementById('preview-area');
+            const previewImage = document.getElementById('preview-image');
+            previewArea.classList.remove('hidden');
+            previewImage.src = e.target.result;
+            previewImage.onload = () => this.analyzeImage(previewImage);
+        };
+        reader.readAsDataURL(file);
+    },
+
     // Upload area setup
     setupUploadArea() {
         const uploadArea = document.getElementById('upload-area');
@@ -873,6 +939,13 @@ const app = {
         this.expressions = null;
         this.faceShape = null;
         this.personalColor = null;
+        this.categoryAverages = null;
+
+        // 카메라 스트림 정리
+        if (this._cameraStream) {
+            this._cameraStream.getTracks().forEach(t => t.stop());
+            this._cameraStream = null;
+        }
 
         // Reset UI
         document.getElementById('upload-area').classList.remove('hidden');
@@ -979,75 +1052,77 @@ const app = {
 
         // 질문 섹션으로 이동
         this.showSection('questions');
+        this.updateScenarioBadge();
         this.renderScenarioQuestion();
+    },
+
+    // 시나리오 배지 업데이트
+    updateScenarioBadge() {
+        const badge = document.getElementById('scenario-active-badge');
+        const iconEl = document.getElementById('scenario-badge-icon');
+        const nameEl = document.getElementById('scenario-badge-name');
+        if (!badge || !this.currentScenario) return;
+        const icons = { daily: '🏠', work: '💼', romance: '💕', school: '🎓', social: '👥', family: '👨‍👩‍👧' };
+        const nameKey = `scenario${this.currentScenario.id.charAt(0).toUpperCase() + this.currentScenario.id.slice(1)}`;
+        if (iconEl) iconEl.textContent = icons[this.currentScenario.id] || '🎯';
+        if (nameEl) nameEl.textContent = i18n.t(nameKey) || this.currentScenario.id;
     },
 
     // 시나리오 질문 렌더링
     renderScenarioQuestion() {
-        if (!this.currentQuestionSet || this.currentQuestionSet.length === 0) {
-            console.error('Question set not loaded');
-            return;
-        }
+        if (!this.currentQuestionSet || this.currentQuestionSet.length === 0) return;
 
-        // 배열에서 직접 질문 가져오기
         const question = this.currentQuestionSet[this.currentQuestionIndex];
-
-        if (!question) {
-            console.error('Question not found at index:', this.currentQuestionIndex);
-            return;
-        }
+        if (!question) return;
 
         // 진행률 업데이트
         const progress = ((this.currentQuestionIndex + 1) / this.currentQuestionSet.length) * 100;
         document.getElementById('progress-fill').style.width = `${progress}%`;
         document.getElementById('progress-text').textContent = `${this.currentQuestionIndex + 1} / ${this.currentQuestionSet.length}`;
 
-        // 질문 텍스트 표시
         const questionText = question.text[i18n.currentLang] || question.text.ko;
         const questionContent = document.getElementById('question-content');
+        if (!questionContent) return;
 
-        if (!questionContent) {
-            console.error('question-content not found');
-            return;
-        }
+        const qNum = this.currentQuestionIndex + 1;
+        const total = this.currentQuestionSet.length;
+        const qLabel = i18n.t('questionLabel') || 'Q';
 
-        // Create or update question card
         questionContent.innerHTML = `
             <div class="question-card">
+                <div class="question-meta">
+                    <span class="question-num-badge">${qLabel}. ${qNum} <span class="question-meta-total">/ ${total}</span></span>
+                </div>
                 <h2 class="question-title">${questionText}</h2>
                 <div class="options" id="question-options"></div>
             </div>
         `;
 
-        // 옵션 렌더링
         const optionsContainer = document.getElementById('question-options');
         if (optionsContainer && question.options) {
             optionsContainer.innerHTML = '';
-
-            // 옵션 순서를 랜덤하게 섞기 (패턴 답변 방지)
+            const optLabels = i18n.t('optionLabels') || ['A','B','C','D','E'];
             const shuffledOptions = this.shuffleArray(question.options);
 
-            shuffledOptions.forEach((option) => {
+            shuffledOptions.forEach((option, idx) => {
                 const optionLabel = option.label[i18n.currentLang] || option.label.ko;
                 const optionBtn = document.createElement('button');
                 optionBtn.className = 'option-btn';
-                optionBtn.textContent = optionLabel;
+                const letter = optLabels[idx] || String.fromCharCode(65 + idx);
+                optionBtn.innerHTML = `<span class="option-letter">${letter}</span><span class="option-text">${optionLabel}</span>`;
                 optionBtn.onclick = (e) => {
                     optionsContainer.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
                     e.currentTarget.classList.add('selected');
-                    this.selectScenarioAnswer(question.id, option.score);
+                    setTimeout(() => this.selectScenarioAnswer(question.id, option.score), 180);
                 };
 
-                // 이미 선택한 답변이 있으면 표시
                 if (this.scenarioAnswers[this.currentScenario.id]?.[question.id] === option.score) {
                     optionBtn.classList.add('selected');
                 }
-
                 optionsContainer.appendChild(optionBtn);
             });
         }
 
-        // 뒤로가기 버튼 업데이트
         this.updateBackButton();
     },
 
@@ -1177,6 +1252,44 @@ const app = {
         ctxEl.textContent = ctxMsg;
     },
 
+    // 카테고리별 점수 바 렌더링
+    renderScoreBars() {
+        if (!this.categoryAverages) return;
+        const container = document.getElementById('score-bars-container');
+        const barsEl = document.getElementById('score-bars');
+        if (!container || !barsEl) return;
+
+        const categories = [
+            { key: 'emotion',         label: i18n.t('scoreEmotion')         || '정서 조절',  color: '#667eea' },
+            { key: 'responsibility',  label: i18n.t('scoreResponsibility')  || '책임감',     color: '#764ba2' },
+            { key: 'relationship',    label: i18n.t('scoreRelationship')    || '대인 관계',  color: '#f093fb' },
+            { key: 'values',          label: i18n.t('scoreValues')          || '가치관',     color: '#f5576c' },
+            { key: 'self',            label: i18n.t('scoreSelf')            || '자기 인식',  color: '#4facfe' },
+        ];
+
+        barsEl.innerHTML = categories.map(cat => {
+            const raw = this.categoryAverages[cat.key] ?? 3;
+            const pct = Math.round(((raw - 1) / 4) * 100);
+            return `
+                <div class="score-bar-row">
+                    <span class="score-bar-label">${cat.label}</span>
+                    <div class="score-bar-track">
+                        <div class="score-bar-fill" style="width:0%;background:${cat.color}" data-pct="${pct}"></div>
+                    </div>
+                    <span class="score-bar-value">${pct}%</span>
+                </div>`;
+        }).join('');
+
+        container.classList.remove('hidden');
+
+        // 애니메이션: 렌더 후 width 적용
+        requestAnimationFrame(() => {
+            barsEl.querySelectorAll('.score-bar-fill').forEach(el => {
+                el.style.width = el.dataset.pct + '%';
+            });
+        });
+    },
+
     // 카테고리 레이더 차트 렌더링
     renderMindAgeChart() {
         if (!window.Chart || !this.categoryAverages) return;
@@ -1268,6 +1381,9 @@ const app = {
 
         // Display additional analysis results
         this.displayAdditionalAnalysis();
+
+        // 카테고리 점수 바
+        this.renderScoreBars();
 
         // Render category radar chart
         this.renderMindAgeChart();
@@ -1625,14 +1741,12 @@ const app = {
     },
 
     async clearHistory() {
-        if (!confirm(i18n.t('historyClearConfirm'))) return;
-
+        const confirmed = await window.showConfirmModal(i18n.t('historyClearConfirm'));
+        if (!confirmed) return;
         try {
             await HistoryDB.clearAll();
             await this.renderHistory();
-        } catch (error) {
-            console.error('Failed to clear history:', error);
-        }
+        } catch {}
     }
 };
 

@@ -7,13 +7,22 @@ const translations_en = {
     },
     subtitle: "AI estimates your physical age from your photo,<br>and 10 questions reveal your mental age",
     btnStart: "Start Test",
+    trustBadge: "✨ AI Face Analysis · Psychology Test",
+    flowStep1: "📸 Photo Analysis",
+    flowStep2: "🧠 Psychology Quiz",
+    flowStep3: "🎯 Results",
 
     // Upload Screen
-    uploadTitle: "Upload Photo",
-    uploadDesc: "Please upload a photo with your face clearly visible",
+    uploadTitle: "Upload Your Photo",
+    uploadDesc: "Please upload a clear front-facing photo",
     uploadText: "Click or drag an image here",
+    uploadOrText: "or",
+    btnCamera: "📷 Take a Photo",
     btnChange: "Change Photo",
     btnNext: "Next Step",
+    stepAnalysis: "Step 1 · Face Analysis",
+    stepQuestion: "Step 2 · Psychology Quiz",
+    stepResult: "Step 3 · Results",
 
     // Analyzing
     analyzing: "AI is analyzing your face...",
@@ -67,6 +76,14 @@ const translations_en = {
     // Questions
     progressText: "{current} / {total}",
     customQuestionNotice: "Questions customized for your age and gender",
+    questionLabel: "Q",
+    optionLabels: ["A", "B", "C", "D", "E"],
+    scoreSummaryTitle: "Category Breakdown",
+    scoreEmotion: "Emotional Regulation",
+    scoreResponsibility: "Responsibility",
+    scoreRelationship: "Relationships",
+    scoreValues: "Values",
+    scoreSelf: "Self-Awareness",
 
     // Result Screen
     resultTitle: "Results",

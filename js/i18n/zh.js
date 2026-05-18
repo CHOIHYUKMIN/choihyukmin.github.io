@@ -7,13 +7,22 @@ const translations_zh = {
     },
     subtitle: "AI通过你的照片估算实际年龄，<br>10个问题揭示你的心理年龄",
     btnStart: "开始测试",
+    trustBadge: "✨ AI面部分析 · 心理测试",
+    flowStep1: "📸 照片分析",
+    flowStep2: "🧠 心理问题",
+    flowStep3: "🎯 查看结果",
 
     // Upload Screen
-    uploadTitle: "上传照片",
+    uploadTitle: "请上传您的照片",
     uploadDesc: "请上传正面清晰的照片",
     uploadText: "点击或拖动图片到这里",
+    uploadOrText: "或者",
+    btnCamera: "📷 拍照",
     btnChange: "更换照片",
     btnNext: "下一步",
+    stepAnalysis: "第1步 · 面部分析",
+    stepQuestion: "第2步 · 心理问题",
+    stepResult: "第3步 · 查看结果",
 
     // Analyzing
     analyzing: "AI正在分析你的面部...",
@@ -43,6 +52,14 @@ const translations_zh = {
     // Questions
     progressText: "{current} / {total}",
     customQuestionNotice: "根据您的年龄和性别定制的问题",
+    questionLabel: "Q",
+    optionLabels: ["A", "B", "C", "D", "E"],
+    scoreSummaryTitle: "类别分析",
+    scoreEmotion: "情绪调节",
+    scoreResponsibility: "责任感",
+    scoreRelationship: "人际关系",
+    scoreValues: "价值观",
+    scoreSelf: "自我认知",
 
     // Result personalized context (ageGroup_gender)
     ctx_teen_male: "在十几岁男生中，心理年龄很特别！🎮",

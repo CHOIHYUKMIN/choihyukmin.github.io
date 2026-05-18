@@ -7,13 +7,22 @@ const translations_ko = {
     },
     subtitle: "AI가 당신의 얼굴로 실물 나이를 추측하고,<br>10가지 질문으로 마음의 나이를 알려드려요",
     btnStart: "테스트 시작하기",
+    trustBadge: "✨ AI 얼굴 분석 · 심리 테스트",
+    flowStep1: "📸 사진 분석",
+    flowStep2: "🧠 심리 질문",
+    flowStep3: "🎯 결과 확인",
 
     // Upload Screen
-    uploadTitle: "사진 업로드",
-    uploadDesc: "정면 얼굴이 잘 보이는 사진을 올려주세요",
+    uploadTitle: "사진을 업로드해주세요",
+    uploadDesc: "정면 얼굴이 잘 보이는 사진을 선택해주세요",
     uploadText: "클릭하거나 이미지를 드래그하세요",
+    uploadOrText: "또는",
+    btnCamera: "📷 카메라로 찍기",
     btnChange: "사진 변경",
     btnNext: "다음 단계",
+    stepAnalysis: "1단계 · 얼굴 분석",
+    stepQuestion: "2단계 · 심리 질문",
+    stepResult: "3단계 · 결과 확인",
 
     // Analyzing
     analyzing: "AI가 당신의 얼굴을 분석하고 있어요...",
@@ -43,6 +52,14 @@ const translations_ko = {
     // Questions
     progressText: "{current} / {total}",
     customQuestionNotice: "당신의 연령·성별에 맞춘 질문입니다",
+    questionLabel: "Q",
+    optionLabels: ["A", "B", "C", "D", "E"],
+    scoreSummaryTitle: "카테고리별 분석",
+    scoreEmotion: "정서 조절",
+    scoreResponsibility: "책임감",
+    scoreRelationship: "대인 관계",
+    scoreValues: "가치관",
+    scoreSelf: "자기 인식",
 
     // Result Chart
     chartTitle: "마음 나이 분석",

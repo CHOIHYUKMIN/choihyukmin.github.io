@@ -1516,3 +1516,344 @@ body::before {
     .scenario-modal-content { width: 95%; padding: var(--spacing-md); }
     .scenario-modal-title { font-size: 1.05rem; }
 }
+
+/* ===========================
+   Flow Steps (Start Screen)
+   =========================== */
+.flow-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin: 1.5rem 0 2rem;
+}
+
+.flow-step {
+    background: rgba(102,126,234,0.1);
+    border: 1px solid rgba(102,126,234,0.22);
+    border-radius: var(--radius-full);
+    padding: 0.4rem 0.9rem;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.flow-arrow {
+    color: var(--text-tertiary);
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+/* ===========================
+   Section Header
+   =========================== */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex: 1;
+    justify-content: center;
+}
+
+.step-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    transition: background 0.3s, transform 0.3s;
+    display: inline-block;
+}
+
+.step-dot.active {
+    background: var(--accent-purple);
+    transform: scale(1.25);
+    box-shadow: 0 0 8px rgba(102,126,234,0.6);
+}
+
+.step-line {
+    width: 20px; height: 2px;
+    background: rgba(255,255,255,0.1);
+    display: inline-block;
+    border-radius: 1px;
+}
+
+.step-label {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* ===========================
+   Camera Capture
+   =========================== */
+.upload-or {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0.75rem 0;
+}
+
+.upload-or-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+}
+
+.upload-or-text {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+}
+
+.btn-camera {
+    width: 100%;
+    padding: 0.7rem 1.5rem;
+    background: rgba(255,255,255,0.04);
+    border: 1.5px dashed rgba(255,255,255,0.18);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-camera:hover {
+    border-color: rgba(102,126,234,0.45);
+    background: rgba(102,126,234,0.06);
+    color: var(--text-primary);
+}
+
+.camera-area {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: #000;
+    margin: 0.75rem 0;
+}
+
+.camera-area video {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    display: block;
+    border-radius: var(--radius-lg);
+}
+
+.camera-controls {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.btn-capture {
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.btn-capture:hover { background: rgba(255,255,255,0.3); transform: scale(1.08); }
+
+.btn-camera-close {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-fast);
+}
+
+.btn-camera-close:hover { background: rgba(255,60,60,0.5); }
+
+/* ===========================
+   Question Screen
+   =========================== */
+.question-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.question-progress-wrap { flex: 1; }
+
+.question-meta { margin-bottom: 0.5rem; text-align: center; }
+
+.question-num-badge {
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent-purple);
+    background: rgba(102,126,234,0.1);
+    border: 1px solid rgba(102,126,234,0.2);
+    border-radius: var(--radius-full);
+    padding: 0.25rem 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+.question-meta-total {
+    color: var(--text-tertiary);
+    font-weight: 400;
+}
+
+.option-btn {
+    display: flex;
+    align-items: center;
+}
+
+.option-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-right: 0.75rem;
+    transition: all var(--transition-fast);
+}
+
+.option-btn.selected .option-letter {
+    background: var(--accent-purple);
+    border-color: var(--accent-purple);
+    color: #fff;
+}
+
+.option-text { flex: 1; text-align: left; }
+
+/* 시나리오 활성 배지 */
+.scenario-active-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(102,126,234,0.07);
+    border: 1px solid rgba(102,126,234,0.16);
+    border-radius: var(--radius-full);
+    padding: 0.4rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    flex-wrap: wrap;
+}
+
+#scenario-badge-icon { font-size: 1rem; }
+
+#scenario-badge-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.custom-notice-text {
+    font-size: 0.72rem;
+    color: var(--text-tertiary);
+}
+
+/* ===========================
+   Score Bars (Result Screen)
+   =========================== */
+.score-bars-container {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-md);
+    padding: 1.1rem 1.25rem;
+    margin: 0.75rem 0;
+}
+
+.score-bars-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 0.8rem;
+    text-align: center;
+}
+
+.score-bars { display: flex; flex-direction: column; gap: 0.55rem; }
+
+.score-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.score-bar-label {
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    width: 68px;
+    flex-shrink: 0;
+    text-align: right;
+    font-weight: 500;
+}
+
+.score-bar-track {
+    flex: 1;
+    height: 5px;
+    background: rgba(255,255,255,0.08);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.score-bar-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    width: 0%;
+    transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.score-bar-value {
+    font-size: 0.7rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    width: 30px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+/* ===========================
+   Responsive additions
+   =========================== */
+@media (max-width: 768px) {
+    .flow-steps { gap: 0.2rem; }
+    .flow-step { font-size: 0.7rem; padding: 0.3rem 0.6rem; }
+    .flow-arrow { font-size: 0.75rem; }
+    .score-bar-label { width: 56px; font-size: 0.7rem; }
+    .question-num-badge { font-size: 0.68rem; }
+    .scenario-active-badge { font-size: 0.72rem; }
+    .option-letter { width: 20px; height: 20px; font-size: 0.62rem; margin-right: 0.5rem; }
+    .camera-area video { max-height: 240px; }
+    .btn-capture { width: 50px; height: 50px; }
+    .step-label { display: none; }
+}

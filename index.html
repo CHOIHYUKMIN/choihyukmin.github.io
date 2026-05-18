@@ -140,7 +140,7 @@
                     <div class="shape shape-3"></div>
                 </div>
 
-                <div class="trust-badge">✨ AI 얼굴 분석 · 심리 테스트</div>
+                <div class="trust-badge" data-i18n="trustBadge">✨ AI 얼굴 분석 · 심리 테스트</div>
 
                 <h1 class="main-title" data-i18n="title">
                     당신의 마음은<br>몇 살인가요?
@@ -151,18 +151,32 @@
                     10가지 질문으로 마음의 나이를 알려드려요
                 </p>
 
+                <!-- 3단계 플로우 가이드 -->
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <span class="flow-step-icon" data-i18n="flowStep1">📸 사진 분석</span>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <span class="flow-step-icon" data-i18n="flowStep2">🧠 심리 질문</span>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <span class="flow-step-icon" data-i18n="flowStep3">🎯 결과 확인</span>
+                    </div>
+                </div>
+
                 <button class="btn-primary btn-start" onclick="window.app && window.app.goToUpload()">
                     <span data-i18n="btnStart">테스트 시작하기</span>
                     <span class="btn-glow"></span>
                 </button>
 
-                <button class="btn-view-history" onclick="window.app && window.app.openHistory()"
-                    style="margin-top: 1rem; display: block; margin-left: auto; margin-right: auto;">
+                <button class="btn-view-history" onclick="window.app && window.app.openHistory()">
                     <span data-i18n="btnHistory">📊 내 기록 보기</span>
                 </button>
 
                 <!-- AdSense Ad -->
-                <div class="ad-container" style="margin-top: 3rem;">
+                <div class="ad-container" style="margin-top: 2.5rem;">
                     <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7456046576951897"
                         data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
                     <script>
@@ -176,32 +190,32 @@
     <!-- Upload Section -->
     <section id="upload-section" class="section">
         <div class="container">
-            <button class="btn-back" onclick="app.goToStart()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 12H5M12 19l-7-7 7-7" />
-                </svg>
-            </button>
+            <div class="section-header">
+                <button class="btn-back" onclick="app.goToStart()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                    <span data-i18n="btnPrevQuestion">← 이전</span>
+                </button>
+                <div class="step-indicator">
+                    <span class="step-dot active"></span>
+                    <span class="step-line"></span>
+                    <span class="step-dot"></span>
+                    <span class="step-line"></span>
+                    <span class="step-dot"></span>
+                </div>
+                <span class="step-label" data-i18n="stepAnalysis">1단계 · 얼굴 분석</span>
+            </div>
 
             <div class="upload-content">
-                <h2 class="section-title" data-i18n="uploadTitle">사진 업로드</h2>
-                <p class="section-description" data-i18n="uploadDesc">정면 얼굴이 잘 보이는 사진을 올려주세요</p>
-
-                <!-- AdSense Ad -->
-                <div class="ad-container" style="margin-bottom: 1.5rem;">
-                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7456046576951897"
-                        data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                    <script>
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                </div>
+                <h2 class="section-title" data-i18n="uploadTitle">사진을 업로드해주세요</h2>
+                <p class="section-description" data-i18n="uploadDesc">정면 얼굴이 잘 보이는 사진을 선택해주세요</p>
 
                 <div class="upload-card" id="upload-card">
                     <div class="upload-area" id="upload-area">
                         <div class="upload-icon">
-                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path
-                                    d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                                 <circle cx="12" cy="13" r="4" />
                             </svg>
                         </div>
@@ -212,6 +226,26 @@
                     <div class="preview-area hidden" id="preview-area">
                         <img id="preview-image" alt="Preview">
                         <button class="btn-change" onclick="app.changePhoto()" data-i18n="btnChange">사진 변경</button>
+                    </div>
+                </div>
+
+                <!-- 카메라 촬영 버튼 -->
+                <div class="upload-or" id="upload-or-row">
+                    <span class="upload-or-line"></span>
+                    <span class="upload-or-text" data-i18n="uploadOrText">또는</span>
+                    <span class="upload-or-line"></span>
+                </div>
+                <button class="btn-camera" id="btn-camera" onclick="app.openCamera()">
+                    <span data-i18n="btnCamera">📷 카메라로 찍기</span>
+                </button>
+                <!-- 카메라 스트림 영역 -->
+                <div class="camera-area hidden" id="camera-area">
+                    <video id="camera-video" autoplay playsinline muted></video>
+                    <div class="camera-controls">
+                        <button class="btn-capture" onclick="app.capturePhoto()">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9"/></svg>
+                        </button>
+                        <button class="btn-camera-close" onclick="app.closeCamera()">✕</button>
                     </div>
                 </div>
 
@@ -239,6 +273,7 @@
 
                 <button class="btn-primary btn-next hidden" id="btn-next" onclick="app.goToScenario()">
                     <span data-i18n="btnNext">다음 단계</span>
+                    <span class="btn-glow"></span>
                 </button>
             </div>
         </div>
@@ -277,34 +312,22 @@
     <!-- Questions Section -->
     <section id="questions-section" class="section">
         <div class="container">
-            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-                <button class="btn-back" id="btn-back" onclick="app.goToPreviousQuestion()" style="display: none;" data-i18n="btnPrevQuestion">
-                    ← 이전
-                </button>
-                <div style="flex: 1;">
+            <!-- 진행 헤더 -->
+            <div class="question-header">
+                <button class="btn-back" id="btn-back" onclick="app.goToPreviousQuestion()" style="display:none;" data-i18n="btnPrevQuestion">← 이전</button>
+                <div class="question-progress-wrap">
                     <div class="progress-bar">
                         <div class="progress-fill" id="progress-fill"></div>
                     </div>
-                    <span id="progress-text" style="display:block;text-align:right;font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:0.3rem;font-family:'Poppins',sans-serif;font-weight:600;letter-spacing:0.5px;">1 / 10</span>
+                    <span id="progress-text">1 / 10</span>
                 </div>
             </div>
 
-            <!-- Customized Question Notice -->
-            <div style="text-align: center; margin-bottom: 1rem;">
-                <span
-                    style="display: inline-block; padding: 0.5rem 1rem; background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%); border-radius: 20px; font-size: 0.85rem; color: rgba(255, 255, 255, 0.8);"
-                    data-i18n="customQuestionNotice">
-                    당신의 연령·성별에 맞춘 질문입니다
-                </span>
-            </div>
-
-            <!-- AdSense Ad -->
-            <div class="ad-container" style="margin-bottom: 1.5rem;">
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7456046576951897"
-                    data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
+            <!-- 시나리오 배지 -->
+            <div class="scenario-active-badge" id="scenario-active-badge">
+                <span id="scenario-badge-icon">🏠</span>
+                <span id="scenario-badge-name">일상생활</span>
+                <span class="custom-notice-text" data-i18n="customQuestionNotice">당신의 연령·성별에 맞춘 질문입니다</span>
             </div>
 
             <div class="question-content" id="question-content">
@@ -350,10 +373,18 @@
                     <p class="message-text" id="message-text">완벽한 밸런스!</p>
                 </div>
 
+                <!-- 카테고리 점수 바 -->
+                <div id="score-bars-container" class="score-bars-container hidden">
+                    <h3 class="score-bars-title" data-i18n="scoreSummaryTitle">카테고리별 분석</h3>
+                    <div class="score-bars" id="score-bars">
+                        <!-- JS로 동적 삽입 -->
+                    </div>
+                </div>
+
                 <!-- Mind Age Category Radar Chart -->
                 <div id="mind-age-chart-container" class="mind-age-chart-container hidden">
                     <h3 class="chart-title" data-i18n="chartTitle">마음 나이 분석</h3>
-                    <canvas id="mindAgeChart" width="300" height="300"></canvas>
+                    <canvas id="mindAgeChart" width="260" height="260"></canvas>
                 </div>
 
                 <!-- Archetype Info -->
