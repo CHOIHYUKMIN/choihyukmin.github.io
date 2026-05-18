@@ -423,9 +423,22 @@ const app = {
             const previewImage = document.getElementById('preview-image');
             previewArea.classList.remove('hidden');
             previewImage.src = e.target.result;
-            previewImage.onload = () => this.analyzeImage(previewImage);
+            previewImage.onload = () => {
+                // AI 분석은 원본 픽셀 그대로 (CSS filter는 canvas 읽기에 영향 없음)
+                this.analyzeImage(previewImage);
+                // 분석과 동시에 표시용 보정 적용 (사용자에게 보이는 버전)
+                this.applyPhotoEnhancement(previewImage);
+            };
         };
         reader.readAsDataURL(file);
+    },
+
+    // 표시용 사진 보정 (분석에는 영향 없음 — CSS filter는 canvas drawImage에 미적용)
+    applyPhotoEnhancement(imgEl) {
+        if (!imgEl) return;
+        // 자연스러운 피부톤 보정: 밝기 +6%, 대비 +4%, 채도 +10%
+        imgEl.style.filter = 'brightness(1.06) contrast(1.04) saturate(1.10)';
+        imgEl.style.transition = 'filter 0.6s ease';
     },
 
     // Upload area setup
@@ -474,17 +487,17 @@ const app = {
         reader.onload = (e) => {
             this.uploadedImage = e.target.result;
 
-            // Show preview
             const previewImage = document.getElementById('preview-image');
-            previewImage.crossOrigin = 'anonymous'; // Allow canvas to read pixels
+            previewImage.crossOrigin = 'anonymous';
             previewImage.src = this.uploadedImage;
 
-            // Hide upload area, show preview
             document.getElementById('upload-area').classList.add('hidden');
             document.getElementById('preview-area').classList.remove('hidden');
 
-            // Analyze the image
+            // AI 분석: 원본 픽셀 그대로 (CSS filter는 canvas 읽기에 미적용)
             this.analyzeImage(previewImage);
+            // 표시용 보정: 사용자에게 보이는 버전만
+            this.applyPhotoEnhancement(previewImage);
         };
 
         reader.readAsDataURL(file);
@@ -498,7 +511,10 @@ const app = {
         document.getElementById('age-result').classList.add('hidden');
         document.getElementById('btn-next').classList.add('hidden');
 
-        // Reset
+        // 보정 필터 초기화
+        const previewImage = document.getElementById('preview-image');
+        if (previewImage) previewImage.style.filter = '';
+
         this.uploadedImage = null;
         this.physicalAge = null;
         this.gender = null;
